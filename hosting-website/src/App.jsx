@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage'
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AddNewProject from './pages/AddNew';
+import StartingPage from './pages/StartingPage'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,7 +18,8 @@ function App() {
       <main className='max-w-5xl mx-auto'>
         <Navbar />
         <Routes>
-          <Route path='/' element={<HomePage />} />
+          <Route path='/' element={<StartingPage />} />
+          <Route path='/dashboard' element={<HomePage />} />
           <Route path='/addNew' element={<AddNewProject />} />
         </Routes>
       </main>
