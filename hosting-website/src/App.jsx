@@ -5,14 +5,23 @@ import './App.css'
 import Navbar from './components/Navbar'
 import HomePage from './pages/HomePage'
 
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import AddNewProject from './pages/AddNewProject';
+
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <main className='max-w-5xl mx-auto'>
-      <Navbar />
-      <HomePage />
-    </main>
+    <Router>
+      <main className='max-w-5xl mx-auto'>
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/addNew' element={<AddNewProject />} />
+        </Routes>
+      </main>
+    </Router>
   )
 }
 
