@@ -7,9 +7,10 @@
 }
 
 .heading {
-    font-size: 50px;
+    font-size: 95px;
     background-image: linear-gradient(60deg, rgba(199, 115, 32, 0.97), rgba(101, 186, 196, 0.658));
     background-clip: text;
+    font-weight: 1000;
     color: transparent;
     z-index: 1;
 }
@@ -27,7 +28,7 @@
 
 .StartDeploying {
     width: 300px;
-    background-color: black;
+    background-color: skyblue;
     border-radius: 10px;
     font-size: 19px;
     color: white;
@@ -39,13 +40,7 @@
     background-color: white;
     border-radius: 10px;
     font-size: 19px;
-    animation: animateGradients 10s linear-infinate;
-}
-
-.gradient:hover {
-    z-index: 1;
-    animation-delay: 3s;
-    background-image: linear-gradient(60deg, rgb(0, 60, 255), rgb(148, 64, 162));
+    color: black;
 }
 
 .GetDemo:hover {

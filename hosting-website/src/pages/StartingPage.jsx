@@ -3,7 +3,7 @@ import '../styles/StartingPage.css';
 function StartingPage() {
   return (
     <div className="App">
-      <h3 className='heading'>AR PIPELINE</h3>
+      <h3 className='heading'>AR SYNC</h3>
       <p className='text'>Vercel's frontend cloud gives developers the frameworks, 
         workflows, and infrastructure to build a faster, 
         more personalized Web</p>
@@ -11,7 +11,7 @@ function StartingPage() {
         <button className='StartDeploying'>
           <p>Start Deploying</p>
         </button>
-        <button className='GetDemo gradient'>
+        <button className='GetDemo'>
           <p>Get Demo</p>
         </button>
       </div>
