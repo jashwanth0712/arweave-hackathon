@@ -7,7 +7,7 @@ import HomePage from './pages/HomePage'
 
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AddNewProject from './pages/AddNewProject';
+import AddNewProject from './pages/AddNew';
 
 function App() {
   const [count, setCount] = useState(0)
