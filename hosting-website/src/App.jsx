@@ -12,11 +12,6 @@ import StartingPage from './pages/StartingPage';
 import Callback from './components/callback';
 
 function App() {
-  useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search)
-    const code = queryParams.get('code')
-    console.log("This is code param: ", code);
-  }, [])
 
   return (
     <Router>

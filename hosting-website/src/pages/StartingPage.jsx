@@ -21,8 +21,8 @@ function StartingPage() {
 
       <div className='step-1'>
         <div className='centre'>
-          <div className='line'><p class="firstStep">Hi nice to meet step 1</p>
-        <p class="firstStep">Hi nice to meet step 1</p></div>
+          <div className='line'><p className="firstStep">Hi nice to meet step 1</p>
+        <p className="firstStep">Hi nice to meet step 1</p></div>
           <div className='circle'><span className='number'>1</span></div>
         </div>
       </div>
