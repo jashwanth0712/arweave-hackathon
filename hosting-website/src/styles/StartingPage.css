@@ -1,4 +1,5 @@
-.App {
+.App 
+{
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -6,55 +7,66 @@
     align-items: center;
 }
 
-.heading {
-    font-size: 50px;
+.heading 
+{
+    width: 100%;
+    font-size: 120px;
     background-image: linear-gradient(60deg, rgba(199, 115, 32, 0.97), rgba(101, 186, 196, 0.658));
     background-clip: text;
+    font-weight: 1000;
     color: transparent;
-    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.text {
+.vercel 
+{
     margin-left: 10%;
     margin-right: 10%;
     font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-.Buttons {
+.Buttons 
+{
     align-items: center;
     max-width: 100%;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
-.StartDeploying {
+.StartDeploying 
+{
     width: 300px;
-    background-color: black;
+    background-color: skyblue;
     border-radius: 10px;
     font-size: 19px;
     color: white;
     margin-right: 20px;
 }
 
-.GetDemo {
-    width: 200px;
+.GetDemo 
+{
+    width: 300px;
     background-color: white;
     border-radius: 10px;
     font-size: 19px;
-    animation: animateGradients 10s linear-infinate;
+    color: black;
+    margin-left: 10px;
 }
 
-.gradient:hover {
-    z-index: 1;
-    animation-delay: 3s;
-    background-image: linear-gradient(60deg, rgb(0, 60, 255), rgb(148, 64, 162));
-}
-
-.GetDemo:hover {
+.GetDemo:hover 
+{
     background-image: linear-gradient(60deg, rgba(199, 115, 32, 0.97), rgba(101, 186, 196, 0.658));
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
     color: white;
 }
 
-.spacingLetters {
+.spacingLetters 
+{
+    margin-top: 25px;
     font-size: 15px;
     font-weight: 500;
     letter-spacing: 2px;
@@ -63,11 +75,20 @@
 .centre {
     display: flex;
     align-items: center;
-    margin-bottom: 200px;
+    margin-top: 30px;
+    margin-bottom: 300px;
+}
+
+.firstStep
+{
+    margin-left: 10px;
+    margin-top: 10px;
+    text-align: left;
+    width: 50vw;
 }
 
 .step-1 {
-    font-size: 10px;
+    font-size: 25px;
     position: relative;
 }
 
@@ -76,13 +97,13 @@
     top: 50%;
     left: 50%;
     width: 1px;
-    height: 200px;
+    height: 300px;
     background-image: linear-gradient(white, skyblue);
 }
 
 .circle {
     position: absolute;
-    margin-top: 175px;
+    margin-top: 275px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
