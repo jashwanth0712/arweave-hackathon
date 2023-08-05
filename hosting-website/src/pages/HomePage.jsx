@@ -1,7 +1,32 @@
 import DeployedProjectCard from "../components/DeployedProjectCard";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function HomePage() {
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(window.location.search)
+        const codeParam = queryParams.get('code')
+        console.log("This is code param: ", codeParam);
+    
+        if(codeParam && (localStorage.getItem("accessToken") === null)) {
+          async function getAccessToken() {
+            await fetch('http://localhost:3000/getAccessToken?code='+codeParam, {
+              method: 'GET',
+            }).then((response) => {
+              return response.json()
+            }).then((data) => {
+              console.log(data);
+              if(data.access_token) {
+                localStorage.setItem("accessToken", data.access_token);
+                window.location.href = "http://localhost:5173/dashboard";
+              }
+            })
+          }
+          getAccessToken()
+        }
+    }, []);
+    
     return (
         <>
             <div className='flex gap-2 mt-5'>
