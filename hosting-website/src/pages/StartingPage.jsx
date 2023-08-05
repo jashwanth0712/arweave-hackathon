@@ -3,8 +3,8 @@ import '../styles/StartingPage.css';
 function StartingPage() {
   return (
     <div className="App">
-      <h3 className='heading'>AR SYNC</h3>
-      <p className='text'>Vercel's frontend cloud gives developers the frameworks, 
+      <h3 className='heading'>arsync</h3>
+      <p className='vercel'>Vercel's frontend cloud gives developers the frameworks, 
         workflows, and infrastructure to build a faster, 
         more personalized Web</p>
       <div className='Buttons'>
@@ -21,7 +21,8 @@ function StartingPage() {
 
       <div className='step-1'>
         <div className='centre'>
-          <div className='line'></div>
+          <div className='line'><p class="firstStep">Hi nice to meet step 1</p>
+        <p class="firstStep">Hi nice to meet step 1</p></div>
           <div className='circle'><span className='number'>1</span></div>
         </div>
       </div>
