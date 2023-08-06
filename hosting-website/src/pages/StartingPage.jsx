@@ -1,5 +1,6 @@
 import image from '../assets/images/Asset-1.png';
 import '../styles/StartingPage.css';
+import { Link } from "react-router-dom";
 
 function StartingPage() {
   return (
@@ -13,9 +14,10 @@ function StartingPage() {
         <button className='StartDeploying' href= 'https://github.com/login/oauth/authorize?client_id={process.env.clientId}'>
           <p>Start Deploying</p>
         </button>
-        <button className='GetDemo'>
-          <p>Get Demo</p>
-        </button>
+        {/* <button className='GetDemo'>Get Demo</button> */}
+        <Link to='/lottie'>
+          <button className='GetDemo'>Get Demo</button>
+        </Link>
       </div>
 
       <p className='spacingLetters'>TRUSTED BY THE BEST FRONTEND TEAMS</p>
@@ -46,7 +48,7 @@ function StartingPage() {
       
       <div className='flex align-top gap-5 w-fit mx-auto'>
         <div className='mx-auto relative'>
-          <div className="h-10 w-10 bg-[var(--warning)] rounded-full grid place-content-center font-bold text-base text-[var(--primary)]">2</div>
+          <div className="h-10 w-10 bg-[var(--warning)] rounded-full grid place-content-center font-bold text-base text-[var(--primary)]">3</div>
           <div className='h-40 w-[1px] bg-[var(--warning)] mx-auto'></div>
           <div className='absolute left-14 top-0 w-max text-start max-w-xs'>
             <p className='text-3xl font-bold'>Deploy 🎉</p>
