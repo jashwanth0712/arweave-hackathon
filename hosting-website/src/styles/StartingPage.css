@@ -102,21 +102,21 @@
   width: 45vw;
 }
 
-.step-1 
+/* .step-1 
 {
   font-size: 25px;
   position: relative;
-}
+} */
 
-.line 
+/* .line 
 {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 1px;
   background-image: linear-gradient(white, skyblue);
-}
-
+} */
+/* 
 .circle 
 {
   position: absolute;
@@ -130,7 +130,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .number 
 {

@@ -7,7 +7,7 @@ export default function HomePage() {
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search)
         const codeParam = queryParams.get('code')
-        console.log("This is code param: ", codeParam);
+        // console.log("This is code param: ", codeParam);
     
         if(codeParam && (localStorage.getItem("accessToken") === null)) {
           async function getAccessToken() {
