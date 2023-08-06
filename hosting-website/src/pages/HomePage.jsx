@@ -1,10 +1,37 @@
 import DeployedProjectCard from "../components/DeployedProjectCard";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 export default function HomePage() {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/arsync_repos');
+            // Replace with your API endpoint URL
+            // console.log(response.data);
+            const mappedData = response.data.map((item) => ({
+                name: item.name,
+                commit_msg: item.commit_msg,
+                updated_at: item.updated_at,
+            }));
+            console.log("mapped data is", mappedData[0]["name"]);
+            setData(mappedData);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    // const firstElementName = dataArray.length > 0 ? dataArray[0].name : '';
     return (
         <>
             <div className='flex gap-2 mt-5'>
+                {/* {data ? data[0].name : "Loading..."} */}
+
                 <form className='w-full'>
                     <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                     <div className="relative">
@@ -23,10 +50,23 @@ export default function HomePage() {
             </div>
 
             <div className='grid grid-cols-3 gap-5 mt-5'>
-                <DeployedProjectCard data={{ title: "placementcell", link: "placement-cell.bay.vercel.app", latestCommit: "updated something", lastUpdatedOn: "7days ago" }} />
-                <DeployedProjectCard data={{ title: "placementcell", link: "placement-cell.bay.vercel.app", latestCommit: "updated something", lastUpdatedOn: "7days ago" }} />
-                <DeployedProjectCard data={{ title: "placementcell", link: "placement-cell.bay.vercel.app", latestCommit: "updated something", lastUpdatedOn: "7days ago" }} />
-                <DeployedProjectCard data={{ title: "placementcell", link: "placement-cell.bay.vercel.app", latestCommit: "updated something", lastUpdatedOn: "7days ago" }} />
+                {data.map((item, index) => (
+                    <React.Fragment key={index}>
+                        {item ? (
+                            <DeployedProjectCard
+                                data={{
+                                    title: item.name,
+                                    link: "placement-cell.bay.vercel.app",
+                                    latestCommit: item.commit_msg,
+                                    lastUpdatedOn: item.updated_at
+                                }}
+                            />
+                        ) : (
+                            "Loading..."
+                        )}
+                    </React.Fragment>
+                ))}
+                {/* {data[0] ? <DeployedProjectCard data={{ title: data[0].name, link: "placement-cell.bay.vercel.app", latestCommit: "updated something", lastUpdatedOn: "7days ago" }} /> : "Loading..."} */}
             </div>
         </>
     );
