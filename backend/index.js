@@ -10,7 +10,9 @@ const accessToken = process.env.G_AUTH;
 const octokit = new Octokit({
     auth: accessToken,
 });
-
+app.get('/hello', (req, res) => {
+    res.send("Hello!");
+});
 
 async function getTags(user, repository) {
     const result = await octokit.request('GET /repos/{owner}/{repo}/tags', {
