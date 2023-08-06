@@ -211,6 +211,8 @@ function send_mail() {
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 var bodyParser = require('body-parser');
 
+require('dotenv').config();
+
 const CLIENT_ID = process.env.VITE_GITHUB_CLIENT_ID;
 const CLIENT_SECRET = process.env.VITE_GITHUB_CLIENT_SECRET;
 
@@ -221,7 +223,7 @@ app.use(bodyParser.json());
 
 app.get('/getAccessToken', async function (req, res) {
     const code = req.query.code;
-    console.log('code', code);
+    console.log('code', code, CLIENT_ID, CLIENT_SECRET);
     const params = "?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code=" + code;
     await fetch('https://github.com/login/oauth/access_token' + params, {
         method: 'POST',
@@ -274,6 +276,21 @@ app.get('/arsync_repos', async (req, res) => {
 app.post('/email', (req, res) => {
     send_mail();
     res.send("Email sent successfully");
+});
+app.get('/getUserData', async function (req, res) {
+    req.get('Authorization');
+    await fetch('https://api.github.com/user', {
+        method: 'GET',
+        headers: {
+            "Accept": "application/json",
+            "Authorization": req.get('Authorization')
+        }
+    }).then((response) => {
+        return response.json();
+    }).then((data) => {
+        console.log(data);
+        res.json(data);
+    });
 });
 
 app.listen(3000, function () {

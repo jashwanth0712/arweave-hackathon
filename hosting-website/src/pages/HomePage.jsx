@@ -27,6 +27,31 @@ export default function HomePage() {
         }
     };
     // const firstElementName = dataArray.length > 0 ? dataArray[0].name : '';
+
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(window.location.search)
+        const codeParam = queryParams.get('code')
+        // console.log("This is code param: ", codeParam);
+
+        if (codeParam && (localStorage.getItem("accessToken") === null)) {
+            async function getAccessToken() {
+                await fetch('http://localhost:3000/getAccessToken?code=' + codeParam, {
+                    method: 'GET',
+                }).then((response) => {
+                    return response.json()
+                }).then((data) => {
+                    console.log(data);
+                    if (data.access_token) {
+                        localStorage.setItem("accessToken", data.access_token);
+                        window.location.href = "http://localhost:5173/dashboard";
+                    }
+                })
+            }
+            getAccessToken()
+        }
+    }, []);
+
     return (
         <>
             <div className='flex gap-2 mt-5'>
@@ -40,16 +65,17 @@ export default function HomePage() {
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        <input type="search" id="default-search" className="block w-full p-3 pl-12 text-sm border ring-none focus:ring-none rounded-lg bg-[var(--primary-dark)] border-[var(--primary-light)] placeholder-gray-400 text-white focus:border-[var(--text-secondary)]" placeholder="Search..." required />
+                        <input type="search" id="default-search" className="block w-full p-2 bg-transparent pl-12 text-sm border ring-none focus:ring-none rounded-lg border-[var(--primary-light)] placeholder-gray-400 text-white focus:border-[var(--text-secondary)]" placeholder="Search..." required />
                     </div>
                 </form>
 
                 <Link to="/addNew">
-                    <button className='text-base text-[var(--primary)] bg-[var(--text)] whitespace-nowrap'>Add New</button>
+                    <button className='text-sm text-[var(--primary)] bg-[var(--text)] whitespace-nowrap'>Add New</button>
                 </Link>
             </div>
 
             <div className='grid grid-cols-3 gap-5 mt-5'>
+
                 {data.map((item, index) => (
                     <React.Fragment key={index}>
                         {item ? (
