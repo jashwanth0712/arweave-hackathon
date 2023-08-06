@@ -10,9 +10,7 @@ const accessToken = process.env.G_AUTH;
 const octokit = new Octokit({
     auth: accessToken,
 });
-app.get('/hello', (req, res) => {
-    res.send("Hello!");
-});
+
 
 async function getTags(user, repository) {
     const result = await octokit.request('GET /repos/{owner}/{repo}/tags', {
@@ -164,6 +162,9 @@ async function createOrUpdateWorkflow(user, repository, filePath) {
 
 app.get('/', (req, res) => {
     res.send("This page currently does nothing :) Navigate to /addWorkflow to add a workflow. Navigate to /repos to view user repos");
+});
+app.get('/hello', (req, res) => {
+    res.send("Hello!");
 });
 
 app.get('/addWorkflow', (req, res) => {
