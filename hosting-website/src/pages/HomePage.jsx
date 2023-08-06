@@ -48,10 +48,10 @@ export default function HomePage() {
             </div>
 
             <div className='grid grid-cols-3 gap-5 mt-5'>
-                <DeployedProjectCard data={{ title: "placementcell", link: "placement-cell.bay.vercel.app", latestCommit: "updated something", lastUpdatedOn: "7days ago" }} />
-                <DeployedProjectCard data={{ title: "placementcell", link: "placement-cell.bay.vercel.app", latestCommit: "updated something", lastUpdatedOn: "7days ago" }} />
-                <DeployedProjectCard data={{ title: "placementcell", link: "placement-cell.bay.vercel.app", latestCommit: "updated something", lastUpdatedOn: "7days ago" }} />
-                <DeployedProjectCard data={{ title: "placementcell", link: "placement-cell.bay.vercel.app", latestCommit: "updated something", lastUpdatedOn: "7days ago" }} />
+                <DeployedProjectCard data={{ title: "placementcell", link: "placement-cell.bay.vercel.app", latestCommit: "updated something", lastUpdatedOn: "7d ago" }} />
+                <DeployedProjectCard data={{ title: "placementcell", link: "placement-cell.bay.vercel.app", latestCommit: "updated something", lastUpdatedOn: "7d ago" }} />
+                <DeployedProjectCard data={{ title: "placementcell", link: "placement-cell.bay.vercel.app", latestCommit: "updated something", lastUpdatedOn: "7d ago" }} />
+                <DeployedProjectCard data={{ title: "placementcell", link: "placement-cell.bay.vercel.app", latestCommit: "updated something", lastUpdatedOn: "7d ago" }} />
             </div>
         </>
     );

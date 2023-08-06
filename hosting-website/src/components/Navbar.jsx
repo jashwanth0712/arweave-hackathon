@@ -39,7 +39,7 @@ export default function Navbar() {
             <nav className="backdrop-blur-lg fixed top-0 left-0 right-0 border-b border-b-[var(--primary-light)] z-10">
                 <div className="max-w-5xl flex items-center justify-between py-4 mx-auto">
                     <img src={logo} alt="" className="h-8" />
-                    <h1 className="text-xl font-semibold">ARSync</h1>
+                    <h1 className="text-xl font-semibold">arsync</h1>
                     
                     {localStorage.getItem("accessToken") ? (
                         <div onClick={handleShowLogout} className="flex items-center gap-3 relative">
