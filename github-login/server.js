@@ -2,7 +2,19 @@ var express = require('express');
 const nodemailer = require('nodemailer');
 const { Octokit } = require("@octokit/rest");
 var cors = require('cors');
-require("dotenv").config()
+
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+var bodyParser = require('body-parser');
+
+require('dotenv').config();
+
+const CLIENT_ID = process.env.VITE_GITHUB_CLIENT_ID;
+const CLIENT_SECRET = process.env.VITE_GITHUB_CLIENT_SECRET;
+
+var app = express();
+
+app.use(cors());
+app.use(bodyParser.json());
 
 // console.log(">>", process);
 const accessToken = process.env.G_AUTH;
@@ -208,19 +220,6 @@ function send_mail() {
 }
 
 
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-var bodyParser = require('body-parser');
-
-require('dotenv').config();
-
-const CLIENT_ID = process.env.VITE_GITHUB_CLIENT_ID;
-const CLIENT_SECRET = process.env.VITE_GITHUB_CLIENT_SECRET;
-
-var app = express();
-
-app.use(cors());
-app.use(bodyParser.json());
-
 app.get('/getAccessToken', async function (req, res) {
     const code = req.query.code;
     console.log('code', code, CLIENT_ID, CLIENT_SECRET);
@@ -236,10 +235,6 @@ app.get('/getAccessToken', async function (req, res) {
         console.log(data);
         res.json(data);
     });
-});
-
-app.get('/getUser', async function (req, res) {
-
 });
 
 
