@@ -1,0 +1,54 @@
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  
+  .depcont{
+    background-color: black;
+    color: white;
+    margin-top: 3%;
+    padding: 2%;
+    border-radius: 15px;
+    border: #444;
+  }
+  h1 {
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  label {
+    margin-bottom: 10px;
+  }
+
+  .btn{
+    margin-top: 4%;
+    color: black;
+    background-color: white;
+  }
+  
+  input[type="text"],
+  input[type="submit"],
+  select {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 4px;
+  }
+  
+  select {
+    cursor: pointer;
+  }
+  
+
+  
