@@ -16,8 +16,15 @@ export default function Navbar() {
         window.location.href = "http://localhost:5173";
     }
 
+    // function storeUserData() {
+    //     console.log("Who are you? ", userData.login);
+    //     localStorage.setItem("username", userData['login']);
+    // }
+
     useEffect(() => {
-        getUserData()
+        if(localStorage.getItem("accessToken")) {
+            getUserData();
+        }
     }, []);
 
     async function getUserData() {
@@ -30,6 +37,8 @@ export default function Navbar() {
             return response.json();
         }).then(data => {
             console.log(data);
+            console.log(data['login']);
+            localStorage.setItem("username", data['login']);
             setUserData(data);
         })
     }
