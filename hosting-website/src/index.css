@@ -4,7 +4,8 @@
 @import 'tailwindcss/utilities';
 
 :root {
-  --primary: #242424;
+  /* #242424 */
+  --primary: #101010; 
   --primary-light: #494949;
   --primary-dark: #333333;
   --success: #00c853;
