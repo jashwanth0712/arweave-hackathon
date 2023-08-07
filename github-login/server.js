@@ -89,14 +89,26 @@ async function getLatestCommit(user, repository, access_token) {
     })
     return commitList["data"][0]["commit"]["message"];
 }
-async function createOrUpdateWorkflow(user, repository, filePath) {
+async function createOrUpdateWorkflow(user, access_token, repository, filePath) {
+    octokit = new Octokit({
+        auth: access_token,
+        request: {
+            fetch,
+        }
+    });
+
     try {
         // Checking for file
         const { data: existingFile } = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
             owner: user,
             repo: repository,
             path: filePath,
+        }).then((data) => {
+            console.log("this is filename : ", data);
         })
+        .catch((err) => {
+            console.log(err);
+        });
 
         //updating file if exists
         await octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
@@ -109,33 +121,40 @@ async function createOrUpdateWorkflow(user, repository, filePath) {
                 email: 'lastmin@gmail.com'
             },
             headers: {
-                authorization: accessToken,
+                authorization: access_token,
             },
             content: 'bmFtZTogQXJkcml2ZSBXb3JrZmxvdwpvbjogW3B1c2hdCmVudjoKICAjIFNldHRpbmcgYW4gZW52aXJvbm1lbnQgdmFyaWFibGUgd2l0aCB0aGUgdmFsdWUgb2YgYSBjb25maWd1cmF0aW9uIHZhcmlhYmxlCiAgZW52X3ZhcjogJHt7IHZhcnMuRU5WX0NPTlRFWFRfVkFSIH19CmpvYnM6CiAgYnVpbGQ6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHYzCiAgICAgIC0gdXNlczogYWN0aW9ucy9zZXR1cC1ub2RlQHYzCiAgICAgICAgd2l0aDoKICAgICAgICAgIG5vZGUtdmVyc2lvbjogJzE4JwogICAgICAtIG5hbWU6IEluc3RhbGwgRGVwZW5kZW5jaWVzCiAgICAgICAgcnVuOiB8CiAgICAgICAgIGVjaG8gIkluc3RhbGxpbmcgRGVwZW5kZW5jaWVzLi4uLiEiCiAgICAgIC0gbmFtZTogQnVpbGQgdGhlIHN0YXRpYyB3ZWJzaXRlCiAgICAgICAgcnVuOiB8CiAgICAgICAgIGNkIHN0YXRpYy13ZWJzaXRlCiAgICAgICAgIGxzCiAgICAgIC0gbmFtZTogVXBsb2FkIHRvIEFyZHJpdmUKICAgICAgICBydW46IHwKICAgICAgICAgZWNobyAiVXBsb2FkaW5nIHRvIEFyZHJpdmUuLi4uISIKICAgICAgICAgZWNobyAicmVwb3NpdG9yeSB2YXJpYWJsZSAgJHt7IHZhcnMuUkVQT1NJVE9SWV9WQVIgfX0iCiAgICAgICAgIyAgYXJkcml2ZSAtLWhlbHAKICAgICAgLSBuYW1lOiBDcmVhdGluZyBhIE1hbmlmZXN0CiAgICAgICAgcnVuOiB8CiAgICAgICAgICBlY2hvICJDcmVhdGluZyBhIG1hbmlmZXN0Li4uLiEiCiAgICAgICAgICBlY2hvICJNYW5pZmVzdCBjcmVhdGVkIFN1Y2Nlc3NmdWxseSEi',
             sha: existingFile.sha,
+        }).then((err) => {
+            console.log(err);
         })
         console.log(`File is updated successfully!`);
     }
     //if file doesn't exist
     catch (error) {
         console.log(`File not found! Created a new file.`);
-        await octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
-            owner: user,
-            repo: repository,
-            path: filePath,
-            message: 'Added workflow by arsync',
-            committer: {
-                name: 'Team Last Minute',
-                email: 'lastmin@gmail.com'
-            },
-            content: 'bmFtZTogQXJkcml2ZSBXb3JrZmxvdwpvbjogW3B1c2hdCmVudjoKICAjIFNldHRpbmcgYW4gZW52aXJvbm1lbnQgdmFyaWFibGUgd2l0aCB0aGUgdmFsdWUgb2YgYSBjb25maWd1cmF0aW9uIHZhcmlhYmxlCiAgZW52X3ZhcjogJHt7IHZhcnMuRU5WX0NPTlRFWFRfVkFSIH19CmpvYnM6CiAgYnVpbGQ6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHYzCiAgICAgIC0gdXNlczogYWN0aW9ucy9zZXR1cC1ub2RlQHYzCiAgICAgICAgd2l0aDoKICAgICAgICAgIG5vZGUtdmVyc2lvbjogJzE4JwogICAgICAtIG5hbWU6IEluc3RhbGwgRGVwZW5kZW5jaWVzCiAgICAgICAgcnVuOiB8CiAgICAgICAgIGVjaG8gIkluc3RhbGxpbmcgRGVwZW5kZW5jaWVzLi4uLiEiCiAgICAgIC0gbmFtZTogQnVpbGQgdGhlIHN0YXRpYyB3ZWJzaXRlCiAgICAgICAgcnVuOiB8CiAgICAgICAgIGNkIHN0YXRpYy13ZWJzaXRlCiAgICAgICAgIGxzCiAgICAgIC0gbmFtZTogVXBsb2FkIHRvIEFyZHJpdmUKICAgICAgICBydW46IHwKICAgICAgICAgZWNobyAiVXBsb2FkaW5nIHRvIEFyZHJpdmUuLi4uISIKICAgICAgICAgZWNobyAicmVwb3NpdG9yeSB2YXJpYWJsZSAgJHt7IHZhcnMuUkVQT1NJVE9SWV9WQVIgfX0iCiAgICAgICAgIyAgYXJkcml2ZSAtLWhlbHAKICAgICAgLSBuYW1lOiBDcmVhdGluZyBhIE1hbmlmZXN0CiAgICAgICAgcnVuOiB8CiAgICAgICAgICBlY2hvICJDcmVhdGluZyBhIG1hbmlmZXN0Li4uLiEiCiAgICAgICAgICBlY2hvICJNYW5pZmVzdCBjcmVhdGVkIFN1Y2Nlc3NmdWxseSEi'
-            , headers: {
-                authorization: accessToken,
-            }
-        })
+        try {
+            const response = await octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
+                owner: user,
+                repo: repository,
+                path: filePath,
+                message: 'Added workflow by arsync',
+                committer: {
+                    name: 'Team Last Minute',
+                    email: 'lastmin@gmail.com'
+                },
+                content: 'bmFtZTogQXJkcml2ZSBXb3JrZmxvdwpvbjogW3B1c2hdCmVudjoKICAjIFNldHRpbmcgYW4gZW52aXJvbm1lbnQgdmFyaWFibGUgd2l0aCB0aGUgdmFsdWUgb2YgYSBjb25maWd1cmF0aW9uIHZhcmlhYmxlCiAgZW52X3ZhcjogJHt7IHZhcnMuRU5WX0NPTlRFWFRfVkFSIH19CmpvYnM6CiAgYnVpbGQ6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHYzCiAgICAgIC0gdXNlczogYWN0aW9ucy9zZXR1cC1ub2RlQHYzCiAgICAgICAgd2l0aDoKICAgICAgICAgIG5vZGUtdmVyc2lvbjogJzE4JwogICAgICAtIG5hbWU6IEluc3RhbGwgRGVwZW5kZW5jaWVzCiAgICAgICAgcnVuOiB8CiAgICAgICAgIGVjaG8gIkluc3RhbGxpbmcgRGVwZW5kZW5jaWVzLi4uLiEiCiAgICAgIC0gbmFtZTogQnVpbGQgdGhlIHN0YXRpYyB3ZWJzaXRlCiAgICAgICAgcnVuOiB8CiAgICAgICAgIGNkIHN0YXRpYy13ZWJzaXRlCiAgICAgICAgIGxzCiAgICAgIC0gbmFtZTogVXBsb2FkIHRvIEFyZHJpdmUKICAgICAgICBydW46IHwKICAgICAgICAgZWNobyAiVXBsb2FkaW5nIHRvIEFyZHJpdmUuLi4uISIKICAgICAgICAgZWNobyAicmVwb3NpdG9yeSB2YXJpYWJsZSAgJHt7IHZhcnMuUkVQT1NJVE9SWV9WQVIgfX0iCiAgICAgICAgIyAgYXJkcml2ZSAtLWhlbHAKICAgICAgLSBuYW1lOiBDcmVhdGluZyBhIE1hbmlmZXN0CiAgICAgICAgcnVuOiB8CiAgICAgICAgICBlY2hvICJDcmVhdGluZyBhIG1hbmlmZXN0Li4uLiEiCiAgICAgICAgICBlY2hvICJNYW5pZmVzdCBjcmVhdGVkIFN1Y2Nlc3NmdWxseSEi'
+                , headers: {
+                    authorization: access_token,
+                }
+            })
+            console.log("File created or updated successfully!", response.data);
+        } catch(err) {
+            console.log("my name is khan but you can call me error :)", err);
+        }
     }
     // addTags(user, repository);
-    addRepoTopic(user, repository);
+    // addRepoTopic(user, repository);
 
 }
 
@@ -222,11 +241,12 @@ app.get('/getUserData', async function (req, res) {
 
 
 app.get('/addWorkflow', (req, res) => {
-    user = username;
-    repository = 'arweave-hackathon';
+    const user = req.get("username");
+    const access_token = req.get("access_token");
+    const repository = req.get("repository");
     filePath = '.github/workflows/blank.yaml';
-    createOrUpdateWorkflow(user, repository, filePath);
-    addRepoTopic(user, repository);
+    createOrUpdateWorkflow(user, access_token, repository, filePath);
+    // addRepoTopic(user, repository);
 
     res.send("Workflow Successfully added");
 });

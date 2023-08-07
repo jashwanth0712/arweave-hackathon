@@ -4,7 +4,7 @@ export default function LoginButton() {
 
     const handleGitHubLogin = () => {
         const clientId = import.meta.env.VITE_GITHUB_CLIENT_ID;
-        window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
+        window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=admin:org,repo,user,workflow`;
     };
 
     return (

@@ -15,6 +15,7 @@ import UncontrolledLottie from './components/LottiePage';
 import ProtectedRoute from './utils/ProtectedRoutes'
 import Login from './pages/Login'
 import ProtectedRoutes from './utils/ProtectedRoutes'
+import DeployForm from './pages/deployform/deployform'
 
 function App() {
 
@@ -23,9 +24,13 @@ function App() {
       <main className='max-w-5xl mx-auto'>
         <Navbar />
         <Routes>
+          <Route element={<ProtectedRoutes />}>
+          </Route>
           <Route path='/' element={<StartingPage />} />
+          <Route path='/login' element={<Login />} />
           <Route path='/dashboard' element={<HomePage />} />
           <Route path='/addNew' element={<AddNewProject />} />
+          <Route path='/import' element={<DeployForm />} />
           <Route path='/callback' element={<Callback />} />
           <Route path='/details' element={<Details />} />
           <Route path='/lottie' element={<UncontrolledLottie />} />

@@ -1,6 +1,7 @@
 import LoginButton from "./LoginButton";
 import { useEffect, useState } from "react";
 import logo from '../assets/images/Asset-1.png';
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
 
@@ -47,7 +48,9 @@ export default function Navbar() {
         <>
             <nav className="backdrop-blur-lg fixed top-0 left-0 right-0 border-b border-b-[var(--primary-light)] z-10">
                 <div className="max-w-5xl flex items-center justify-between py-4 mx-auto">
-                    <img src={logo} alt="" className="h-8" />
+                    <Link to="/">
+                        <img src={logo} alt="" className="h-8" />
+                    </Link>
                     <h1 className="text-xl font-semibold">arsync</h1>
                     
                     {localStorage.getItem("accessToken") ? (
