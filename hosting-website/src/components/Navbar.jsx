@@ -57,7 +57,7 @@ export default function Navbar() {
                         <div onClick={handleShowLogout} className="flex items-center gap-3 relative">
                             <p className="text-sm text-[var(--text-primary)] font-medium">{userData.login}</p>
                             <div className="h-8 w-8 rounded-full bg-gray-400">
-                                <img src={userData.avatar_url} alt="" className="h-8 pointer-events-none" />
+                                <img src={userData.avatar_url} alt="" className="h-8 w-8 rounded-full pointer-events-none" />
                             </div>
                             {showLogout && (
                                 <button onClick={handleLogout} className="absolute top-10 right-0 px-6 py-2 rounded-lg bg-[var(--primary-dark)] text-sm">

@@ -16,6 +16,7 @@ import ProtectedRoute from './utils/ProtectedRoutes'
 import Login from './pages/Login'
 import ProtectedRoutes from './utils/ProtectedRoutes'
 import DeployForm from './pages/deployform/deployform'
+import Success from './pages/Success'
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
           <Route path='/dashboard' element={<HomePage />} />
           <Route path='/addNew' element={<AddNewProject />} />
           <Route path='/import' element={<DeployForm />} />
+          <Route path='/success' element={<Success />} />
           <Route path='/callback' element={<Callback />} />
           <Route path='/details' element={<Details />} />
           <Route path='/lottie' element={<UncontrolledLottie />} />
