@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AddNewProject from './pages/AddNew';
 import StartingPage from './pages/StartingPage';
 import Callback from './components/callback';
-
+import Details from './pages/details/details'
 function App() {
 
   return (
@@ -22,6 +22,7 @@ function App() {
           <Route path='/dashboard' element={<HomePage />} />
           <Route path='/addNew' element={<AddNewProject />} />
           <Route path='/callback' element={<Callback />} />
+          <Route path='/details' element={<Details />} />
         </Routes>
       </main>
     </Router>
