@@ -61,7 +61,7 @@ export default function AddNewProject() {
             
             <div className="mt-10">
                 <p className="text-4xl font-bold text-white">Never stop building.</p>
-                <p className="text-base text-[var(--text-primary)] mt-1">To deploy a new Project, import an existing Git Repository.</p>
+                <p className="text-base text-[var(--text-secondary)] mt-1">To deploy a new Project, import an existing Git Repository.</p>
             </div>
 
             <div className="bg-black border border-[var(--primary-dark)] rounded-xl p-10 mt-20 max-w-2xl">
