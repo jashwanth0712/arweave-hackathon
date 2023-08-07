@@ -177,7 +177,6 @@ app.get('/addWorkflow', (req, res) => {
 });
 
 app.get('/repos', async (req, res) => {
-    console.log(process.env.G_AUTH);
     user = "M-sasank";
     repository = 'arweave-hackathon';
     // const result = await getRepositories(user);
