@@ -2,12 +2,13 @@ import DeployedProjectCard from "../components/DeployedProjectCard";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import React, { useDebugValue, useEffect, useState } from 'react';
+import { exampleNames } from "../utils/exampleNames";
 
 export default function HomePage() {
     const [isLoading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [userData, setUserData] = useState({});
-
+    
     useEffect(() => {
         setLoading(true);
         if(localStorage.getItem("accessToken") && localStorage.getItem("username")) {
@@ -69,6 +70,11 @@ export default function HomePage() {
         }
     }, []);
 
+    function getRandomProfile() {
+        const randomName = exampleNames[Math.floor(Math.random() * exampleNames.length)];
+        return randomName;
+    }
+
     return (
         <>  
             {isLoading && (
@@ -109,6 +115,7 @@ export default function HomePage() {
                         {item ? (
                             <DeployedProjectCard
                                 data={{
+                                    profile: getRandomProfile(),
                                     title: item.name,
                                     link: "placement-cell.bay.vercel.app",
                                     latestCommit: item.commit_msg,
