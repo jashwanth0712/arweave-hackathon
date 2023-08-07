@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useLottie } from "lottie-react";
 import { useNavigate } from "react-router-dom"; // Import useHistory
-import groovyWalkAnimation from "../assets/lottie/animation_ll15mgrx.json";
+import groovyWalkAnimation from "../assets/lottie/animation_lkzu0g6f.json";
 
 const UncontrolledLottie = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const UncontrolledLottie = () => {
 
     // Set a timer to redirect after 3 seconds
     const redirectTimer = setTimeout(() => {
-      navigate('/addNew',{replace:true})
+      navigate(-1)
     }, 3000);
 
     // Clear the timer when the component unmounts

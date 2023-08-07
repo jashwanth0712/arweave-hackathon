@@ -1,6 +1,17 @@
 import './details.css'
+import Lottie from "react-lottie";
+import animation from '../../assets/lottie/animation_ll17q9ak.json'
 
 export default function Details() {
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData : animation,
+    rendererSettings: {
+      preserveAspectRatio: "none",
+    },
+ };
 
     return (
         <>
@@ -18,8 +29,7 @@ export default function Details() {
               
                 
                 <div className="border border-[var(--primary-dark)] rounded-md w-[450px] h-80">
-                   
-                   
+                  <Lottie options={defaultOptions} height={320} width={450} />
                 </div>
 
                 <div className='mx-5'>

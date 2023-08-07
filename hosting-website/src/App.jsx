@@ -27,7 +27,6 @@ function App() {
           <Route path='/dashboard' element={<HomePage />} />
           <Route path='/addNew' element={<AddNewProject />} />
           <Route path='/callback' element={<Callback />} />
-
           <Route path='/details' element={<Details />} />
           <Route path='/lottie' element={<UncontrolledLottie />} />
         </Routes>
