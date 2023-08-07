@@ -1,0 +1,9 @@
+
+.threebtn {
+    display: flex;
+    gap: 10px; /* Adjust the value as needed to set the desired gap between buttons */
+    margin-left: 350px;
+  }
+  
+  /* Optional: Add some styling to the buttons */
+ 

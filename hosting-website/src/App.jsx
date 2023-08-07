@@ -10,6 +10,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AddNewProject from './pages/AddNew';
 import StartingPage from './pages/StartingPage';
 import Callback from './components/callback';
+<<<<<<< HEAD
+=======
+import Details from './pages/details/details'
+import UncontrolledLottie from './components/LottiePage';
+import ProtectedRoute from './utils/ProtectedRoutes'
+import Login from './pages/Login'
+import ProtectedRoutes from './utils/ProtectedRoutes'
 
 function App() {
 
@@ -22,6 +29,9 @@ function App() {
           <Route path='/dashboard' element={<HomePage />} />
           <Route path='/addNew' element={<AddNewProject />} />
           <Route path='/callback' element={<Callback />} />
+
+          <Route path='/details' element={<Details />} />
+          <Route path='/lottie' element={<UncontrolledLottie />} />
         </Routes>
       </main>
     </Router>
