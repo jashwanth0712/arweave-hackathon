@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './deployform.css';
-const DeployForm = () => {
+import { useNavigate, useLocation } from 'react-router-dom';
+
+const DeployForm = (props) => {
   const [projectName, setProjectName] = useState('');
   const [framework, setFramework] = useState('');
   const [rootDirectory, setRootDirectory] = useState('');
@@ -9,12 +11,39 @@ const DeployForm = () => {
   const [outputDirectory, setOutputDirectory] = useState('');
   const [installCommand, setInstallCommand] = useState('');
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log("This is prop: ", location);
+    setProjectName(location.state.repo);
+  })
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission here, e.g., save data to a server
     // or perform other actions based on the form data.
+
+    deployProject();
+
     console.log('Form submitted!');
   };
+
+  const deployProject = async () => {
+    try {
+      const workflow = await fetch('http://localhost:3000/addWorkflow', {
+          method: 'GET',
+          headers: {
+              username: localStorage.getItem("username"),
+              access_token: localStorage.getItem("accessToken"),
+              repository: location.state.repo,
+          }
+      })
+      // console.log("This is reponse data from addWorkflow", workflow);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+  }
 
   return (
 

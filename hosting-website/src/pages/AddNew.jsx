@@ -1,9 +1,11 @@
 import DeployForm from "./deployform/deployform";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AddNewProject() {
     const [isLoading, setLoading] = useState(false);
     const [data, setData] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setLoading(true);
@@ -34,6 +36,14 @@ export default function AddNewProject() {
         }
     };
 
+    const redirectToDeployForm = (repoName) => {
+        navigate('/import', { 
+            state: {
+                repo: repoName
+            }
+        })
+    }
+
     return (
         <>
             {isLoading && (
@@ -59,11 +69,11 @@ export default function AddNewProject() {
                 <div className="border border-[var(--primary-dark)] rounded-md h-96 overflow-y-scroll">
 
                     {
-                        data.map((repo) => {
+                        data.map((repo, index) => {
                             return (
-                                <div className="flex justify-between items-center border-b border-b-[var(--primary-dark)] p-4">
+                                <div key={index} className="flex justify-between items-center border-b border-b-[var(--primary-dark)] p-4">
                                     <p className="text-white text-base font-medium">{repo.name} <span className="font-normal text-[var(--text-secondary)] text-sm">• {repo.updated_at}</span></p>
-                                    <button className="bg-white py-2 px-4 text-black text-sm">Import</button>
+                                    <button onClick={() => redirectToDeployForm(repo.name)} className="bg-white py-2 px-4 text-black text-sm">Import</button>
                                 </div>
                             );
                         })
