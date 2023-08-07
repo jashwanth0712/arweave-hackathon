@@ -89,7 +89,7 @@ async function getLatestCommit(user, repository, access_token) {
     })
     return commitList["data"][0]["commit"]["message"];
 }
-async function createOrUpdateWorkflow(user, access_token, repository, filePath) {
+async function createOrUpdateWorkflow(user, access_token, repository, filePath, scriptFilePath) {
     octokit = new Octokit({
         auth: access_token,
         request: {
@@ -103,14 +103,8 @@ async function createOrUpdateWorkflow(user, access_token, repository, filePath) 
             owner: user,
             repo: repository,
             path: filePath,
-        }).then((data) => {
-            console.log("this is filename : ", data);
         })
-        .catch((err) => {
-            console.log(err);
-        });
-
-        //updating file if exists
+        console.log("File exists", existingFile.sha);
         await octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
             owner: user,
             repo: repository,
@@ -123,12 +117,14 @@ async function createOrUpdateWorkflow(user, access_token, repository, filePath) 
             headers: {
                 authorization: access_token,
             },
-            content: 'bmFtZTogQXJkcml2ZSBXb3JrZmxvdwpvbjogW3B1c2hdCmVudjoKICAjIFNldHRpbmcgYW4gZW52aXJvbm1lbnQgdmFyaWFibGUgd2l0aCB0aGUgdmFsdWUgb2YgYSBjb25maWd1cmF0aW9uIHZhcmlhYmxlCiAgZW52X3ZhcjogJHt7IHZhcnMuRU5WX0NPTlRFWFRfVkFSIH19CmpvYnM6CiAgYnVpbGQ6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHYzCiAgICAgIC0gdXNlczogYWN0aW9ucy9zZXR1cC1ub2RlQHYzCiAgICAgICAgd2l0aDoKICAgICAgICAgIG5vZGUtdmVyc2lvbjogJzE4JwogICAgICAtIG5hbWU6IEluc3RhbGwgRGVwZW5kZW5jaWVzCiAgICAgICAgcnVuOiB8CiAgICAgICAgIGVjaG8gIkluc3RhbGxpbmcgRGVwZW5kZW5jaWVzLi4uLiEiCiAgICAgIC0gbmFtZTogQnVpbGQgdGhlIHN0YXRpYyB3ZWJzaXRlCiAgICAgICAgcnVuOiB8CiAgICAgICAgIGNkIHN0YXRpYy13ZWJzaXRlCiAgICAgICAgIGxzCiAgICAgIC0gbmFtZTogVXBsb2FkIHRvIEFyZHJpdmUKICAgICAgICBydW46IHwKICAgICAgICAgZWNobyAiVXBsb2FkaW5nIHRvIEFyZHJpdmUuLi4uISIKICAgICAgICAgZWNobyAicmVwb3NpdG9yeSB2YXJpYWJsZSAgJHt7IHZhcnMuUkVQT1NJVE9SWV9WQVIgfX0iCiAgICAgICAgIyAgYXJkcml2ZSAtLWhlbHAKICAgICAgLSBuYW1lOiBDcmVhdGluZyBhIE1hbmlmZXN0CiAgICAgICAgcnVuOiB8CiAgICAgICAgICBlY2hvICJDcmVhdGluZyBhIG1hbmlmZXN0Li4uLiEiCiAgICAgICAgICBlY2hvICJNYW5pZmVzdCBjcmVhdGVkIFN1Y2Nlc3NmdWxseSEi',
+            content: 'bmFtZTogQXJkcml2ZSBXb3JrZmxvdwpvbjogW3B1c2hdCmVudjoKICAjIFNldHRpbmcgYW4gZW52aXJvbm1lbnQgdmFyaWFibGUgd2l0aCB0aGUgdmFsdWUgb2YgYSBjb25maWd1cmF0aW9uIHZhcmlhYmxlCiAgZW52X3ZhcjogJHt7IHZhcnMuRU5WX0NPTlRFWFRfVkFSIH19CmpvYnM6CiAgYnVpbGQ6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHYzCiAgICAgIC0gdXNlczogYWN0aW9ucy9zZXR1cC1ub2RlQHYzCiAgICAgICAgd2l0aDoKICAgICAgICAgIG5vZGUtdmVyc2lvbjogJzE4JwogICAgICAtIG5hbWU6IEluc3RhbGwgRGVwZW5kZW5jaWVzCiAgICAgICAgcnVuOiB8CiAgICAgICAgIG5wbSBpbnN0YWxsIC1nIGFyZHJpdmUtY2xpCiAgICAgIC0gbmFtZTogQnVpbGQgdGhlIHN0YXRpYyB3ZWJzaXRlCiAgICAgICAgcnVuOiB8CiAgICAgICAgIG5wbSBpbnN0YWxsCiAgICAgICAgIG5wbSBydW4gYnVpbGQKICAgICAgICAgbHMKICAgICAgLSBuYW1lOiBVcGxvYWQgdG8gQXJkcml2ZQogICAgICAgIHJ1bjogfAogICAgICAgICBlY2hvICJVcGxvYWRpbmcgdG8gQXJkcml2ZS4uLi4hIgogICAgICAgICBlY2hvICJyZXBvc2l0b3J5IHZhcmlhYmxlICAke3sgdmFycy5SRVBPU0lUT1JZX1ZBUiB9fSIKICAgICAgICAjICBhcmRyaXZlIC0taGVscAogICAgICAtIG5hbWU6IENyZWF0aW5nIGEgTWFuaWZlc3QKICAgICAgICBydW46IHwKICAgICAgICAgIGVjaG8gIkNyZWF0aW5nIGEgbWFuaWZlc3QuLi4uISIKICAgICAgICAgIGVjaG8gIk1hbmlmZXN0IGNyZWF0ZWQgU3VjY2Vzc2Z1bGx5ISIK',
             sha: existingFile.sha,
         }).then((err) => {
             console.log(err);
         })
+
         console.log(`File is updated successfully!`);
+
     }
     //if file doesn't exist
     catch (error) {
@@ -143,18 +139,71 @@ async function createOrUpdateWorkflow(user, access_token, repository, filePath) 
                     name: 'Team Last Minute',
                     email: 'lastmin@gmail.com'
                 },
-                content: 'bmFtZTogQXJkcml2ZSBXb3JrZmxvdwpvbjogW3B1c2hdCmVudjoKICAjIFNldHRpbmcgYW4gZW52aXJvbm1lbnQgdmFyaWFibGUgd2l0aCB0aGUgdmFsdWUgb2YgYSBjb25maWd1cmF0aW9uIHZhcmlhYmxlCiAgZW52X3ZhcjogJHt7IHZhcnMuRU5WX0NPTlRFWFRfVkFSIH19CmpvYnM6CiAgYnVpbGQ6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHYzCiAgICAgIC0gdXNlczogYWN0aW9ucy9zZXR1cC1ub2RlQHYzCiAgICAgICAgd2l0aDoKICAgICAgICAgIG5vZGUtdmVyc2lvbjogJzE4JwogICAgICAtIG5hbWU6IEluc3RhbGwgRGVwZW5kZW5jaWVzCiAgICAgICAgcnVuOiB8CiAgICAgICAgIGVjaG8gIkluc3RhbGxpbmcgRGVwZW5kZW5jaWVzLi4uLiEiCiAgICAgIC0gbmFtZTogQnVpbGQgdGhlIHN0YXRpYyB3ZWJzaXRlCiAgICAgICAgcnVuOiB8CiAgICAgICAgIGNkIHN0YXRpYy13ZWJzaXRlCiAgICAgICAgIGxzCiAgICAgIC0gbmFtZTogVXBsb2FkIHRvIEFyZHJpdmUKICAgICAgICBydW46IHwKICAgICAgICAgZWNobyAiVXBsb2FkaW5nIHRvIEFyZHJpdmUuLi4uISIKICAgICAgICAgZWNobyAicmVwb3NpdG9yeSB2YXJpYWJsZSAgJHt7IHZhcnMuUkVQT1NJVE9SWV9WQVIgfX0iCiAgICAgICAgIyAgYXJkcml2ZSAtLWhlbHAKICAgICAgLSBuYW1lOiBDcmVhdGluZyBhIE1hbmlmZXN0CiAgICAgICAgcnVuOiB8CiAgICAgICAgICBlY2hvICJDcmVhdGluZyBhIG1hbmlmZXN0Li4uLiEiCiAgICAgICAgICBlY2hvICJNYW5pZmVzdCBjcmVhdGVkIFN1Y2Nlc3NmdWxseSEi'
+                content: 'bmFtZTogQXJkcml2ZSBXb3JrZmxvdwpvbjogW3B1c2hdCmVudjoKICAjIFNldHRpbmcgYW4gZW52aXJvbm1lbnQgdmFyaWFibGUgd2l0aCB0aGUgdmFsdWUgb2YgYSBjb25maWd1cmF0aW9uIHZhcmlhYmxlCiAgZW52X3ZhcjogJHt7IHZhcnMuRU5WX0NPTlRFWFRfVkFSIH19CmpvYnM6CiAgYnVpbGQ6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHYzCiAgICAgIC0gdXNlczogYWN0aW9ucy9zZXR1cC1ub2RlQHYzCiAgICAgICAgd2l0aDoKICAgICAgICAgIG5vZGUtdmVyc2lvbjogJzE4JwogICAgICAtIG5hbWU6IEluc3RhbGwgRGVwZW5kZW5jaWVzCiAgICAgICAgcnVuOiB8CiAgICAgICAgIG5wbSBpbnN0YWxsIC1nIGFyZHJpdmUtY2xpCiAgICAgIC0gbmFtZTogQnVpbGQgdGhlIHN0YXRpYyB3ZWJzaXRlCiAgICAgICAgcnVuOiB8CiAgICAgICAgIG5wbSBpbnN0YWxsCiAgICAgICAgIG5wbSBydW4gYnVpbGQKICAgICAgICAgbHMKICAgICAgLSBuYW1lOiBVcGxvYWQgdG8gQXJkcml2ZQogICAgICAgIHJ1bjogfAogICAgICAgICBlY2hvICJVcGxvYWRpbmcgdG8gQXJkcml2ZS4uLi4hIgogICAgICAgICBlY2hvICJyZXBvc2l0b3J5IHZhcmlhYmxlICAke3sgdmFycy5SRVBPU0lUT1JZX1ZBUiB9fSIKICAgICAgICAjICBhcmRyaXZlIC0taGVscAogICAgICAtIG5hbWU6IENyZWF0aW5nIGEgTWFuaWZlc3QKICAgICAgICBydW46IHwKICAgICAgICAgIGVjaG8gIkNyZWF0aW5nIGEgbWFuaWZlc3QuLi4uISIKICAgICAgICAgIGVjaG8gIk1hbmlmZXN0IGNyZWF0ZWQgU3VjY2Vzc2Z1bGx5ISIK'
                 , headers: {
                     authorization: access_token,
                 }
             })
-            console.log("File created or updated successfully!", response.data);
-        } catch(err) {
+        } catch (err) {
             console.log("my name is khan but you can call me error :)", err);
         }
     }
-    // addTags(user, repository);
-    // addRepoTopic(user, repository);
+    try {
+        // Checking for file
+        const { data: existingFile } = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+            owner: user,
+            repo: repository,
+            path: scriptFilePath,
+        })
+        console.log("script exists", existingFile.sha);
+        const response_script = await octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
+            owner: user,
+            repo: repository,
+            path: scriptFilePath,
+            message: 'Added workflow by arsync',
+            committer: {
+                name: 'Team Last Minute',
+                email: 'lastmin@gmail.com'
+            },
+            content: "aW1wb3J0IHN1YnByb2Nlc3MNCmltcG9ydCBqc29uDQppbXBvcnQgYXJncGFyc2UNCmRlZiBidWlsZF9mb2xkZXIocm9vdCk6DQogICAgY29tbWFuZD1mJ2FyZHJpdmUgdXBsb2FkLWZpbGUgLWwgInthcmdzLmJ1aWxkfSIgLXcge2FyZ3Mud2FsbGV0fSAtLXBhcmVudC1mb2xkZXItaWQge3Jvb3R9Jw0KICAgIHJlc3VsdCA9IHN1YnByb2Nlc3MucnVuKGNvbW1hbmQsIHNoZWxsPVRydWUsIGNhcHR1cmVfb3V0cHV0PVRydWUsIHRleHQ9VHJ1ZSkNCg0KZGVmIGJ1aWxkX21hbmlmZXN0KHJvb3QpOg0KICAgIGNvbW1hbmQ9ZidhcmRyaXZlIGNyZWF0ZS1tYW5pZmVzdCAtZiB7cm9vdH0gLXcge2FyZ3Mud2FsbGV0fScNCiAgICByZXN1bHQgPSBzdWJwcm9jZXNzLnJ1bihjb21tYW5kLCBzaGVsbD1UcnVlLCBjYXB0dXJlX291dHB1dD1UcnVlLCB0ZXh0PVRydWUpDQogICAgZGF0YT1qc29uLmxvYWRzKHJlc3VsdC5zdGRvdXQpDQogICAgcmV0dXJuIGRhdGFbImxpbmtzIl1bMF0NCmRlZiBnZXRfcm9vdF9mb2xkZXJfaWQoKToNCiAgICBjbGlfb3V0cHV0PWdldF9kcml2ZV9saXN0KCkNCiAgICB0cnk6DQogICAgICAgIHBhcnNlZF9kYXRhID0ganNvbi5sb2FkcyhjbGlfb3V0cHV0KQ0KICAgICAgICBmb3IgaSBpbiBwYXJzZWRfZGF0YToNCiAgICAgICAgICAgIGlmIGlbJ3BhdGgnXSA9PSAiL3Rlc3QiOg0KICAgICAgICAgICAgICAgIHJldHVybiBpWydmb2xkZXJJZCddDQogICAgZXhjZXB0IGpzb24uSlNPTkRlY29kZUVycm9yIGFzIGU6DQogICAgICAgIHByaW50KCJFcnJvciBwYXJzaW5nIEpTT046IiwgZSkNCg0KZGVmIGdldF9idWlsZF9maWxlKCk6DQogICAgY2xpX291dHB1dD1nZXRfZHJpdmVfbGlzdCgpDQogICAgdHJ5Og0KICAgICAgICBwYXJzZWRfZGF0YSA9IGpzb24ubG9hZHMoY2xpX291dHB1dCkNCiAgICAgICAgZm9yIGkgaW4gcGFyc2VkX2RhdGE6DQogICAgICAgICAgICBpZiBpWyduYW1lJ10gPT0gImJ1aWxkIjoNCiAgICAgICAgICAgICAgICByZXR1cm4gaVsnZm9sZGVySWQnXQ0KICAgIGV4Y2VwdCBqc29uLkpTT05EZWNvZGVFcnJvciBhcyBlOg0KICAgICAgICBwcmludCgiRXJyb3IgcGFyc2luZyBKU09OOiIsIGUpDQpkZWYgZ2V0X2RyaXZlX2xpc3QoKToNCiAgICBjb21tYW5kID0gZidhcmRyaXZlIGxpc3QtZHJpdmUgLXcge2FyZ3Mud2FsbGV0fSAtZCB7YXJncy5kcml2ZX0nDQogICAgcmVzdWx0ID0gc3VicHJvY2Vzcy5ydW4oY29tbWFuZCwgc2hlbGw9VHJ1ZSwgY2FwdHVyZV9vdXRwdXQ9VHJ1ZSwgdGV4dD1UcnVlKQ0KICAgIHJldHVybiByZXN1bHQuc3Rkb3V0DQoNCmlmIF9fbmFtZV9fID09ICJfX21haW5fXyI6DQogICAgcGFyc2VyID0gYXJncGFyc2UuQXJndW1lbnRQYXJzZXIoZGVzY3JpcHRpb249J0ZpbmQgYW5kIGRpc3BsYXkgb2JqZWN0IHdpdGggYSBzcGVjaWZpZWQgbmFtZSBmcm9tIGFyd2VhdmUgbGlzdC1kcml2ZSBvdXRwdXQuJykNCiAgICBwYXJzZXIuYWRkX2FyZ3VtZW50KCctdycsICctLXdhbGxldCcsIHR5cGU9c3RyLCByZXF1aXJlZD1UcnVlLCBoZWxwPSdXYWxsZXQgYWRkcmVzcycpDQogICAgcGFyc2VyLmFkZF9hcmd1bWVudCgnLWQnLCAnLS1kcml2ZScsIHR5cGU9c3RyLCByZXF1aXJlZD1UcnVlLCBoZWxwPSdkcml2ZSBhZGRyZXNzJykNCiAgICAjIHBhcnNlci5hZGRfYXJndW1lbnQoJy1jJywgJy0tY29tbWl0JywgdHlwZT1zdHIsIHJlcXVpcmVkPVRydWUsIGhlbHA9J2NvbW1pdCBudW1iZXInKQ0KICAgIHBhcnNlci5hZGRfYXJndW1lbnQoJy1iJywgJy0tYnVpbGQnLCB0eXBlPXN0ciwgcmVxdWlyZWQ9VHJ1ZSwgaGVscD0nYnVpbGQgZmlsZSByb290JykNCiAgICBhcmdzID0gcGFyc2VyLnBhcnNlX2FyZ3MoKQ0KICAgICMgdXNlciBjcmVhdGVzIHdhbGxldCBhbmQgYSBkcml2ZSB3aXRoIG5hbWUgYXJzeW5jDQogICAgIyBnZXRfZHJpdmVfbGlzdCgpDQoNCiAgICAjIGdldHRpbmcgdGhlIGZvbGRlciBpZCBvZiByb290DQogICAgcm9vdF9mb2xkZXJfaWQ9Z2V0X3Jvb3RfZm9sZGVyX2lkKCkNCg0KICAgICMgdXBsb2FkaW5nIGJ1aWxkIGZpbGUgd2l0aCBuYW1lIGJ1aWxkXzxjb21taXQgbnVtYmVyPg0KICAgIGJ1aWxkX2ZvbGRlcihyb290X2ZvbGRlcl9pZCkNCg0KICAgICMgZ2V0dGluZyB0aGUgdXBsb2FkZWQgYnVpbGQgZm9sZGVyIGRldGFpbHMNCiAgICBjdXJyZW50X2J1aWxkX2ZvbGRlcl9pZD1nZXRfYnVpbGRfZmlsZSgpDQoNCiAgICAjIGNyZWF0aW5nIGEgbWFuaWZlc3QgYW5kIHJldHVybmluZyB0aGUgbGluaw0KICAgIHByaW50KGJ1aWxkX21hbmlmZXN0KGN1cnJlbnRfYnVpbGRfZm9sZGVyX2lkKSkNCg0KICAgIA0KDQoNCg0KICAgIA=="
+            , headers: {
+                authorization: access_token,
+            },
+            sha: existingFile.sha
+        }).then((err) => {
+            console.log(err);
+        })
+        console.log("Script updated successfully!");
+
+    }
+    //if file doesn't exist
+    catch (error) {
+        console.log(`File not found! Created a new file.`);
+        try {
+            const response_script = await octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
+                owner: user,
+                repo: repository,
+                path: scriptFilePath,
+                message: 'Added workflow by arsync',
+                committer: {
+                    name: 'Team Last Minute',
+                    email: 'lastmin@gmail.com'
+                },
+                content: "aW1wb3J0IHN1YnByb2Nlc3MNCmltcG9ydCBqc29uDQppbXBvcnQgYXJncGFyc2UNCmRlZiBidWlsZF9mb2xkZXIocm9vdCk6DQogICAgY29tbWFuZD1mJ2FyZHJpdmUgdXBsb2FkLWZpbGUgLWwgInthcmdzLmJ1aWxkfSIgLXcge2FyZ3Mud2FsbGV0fSAtLXBhcmVudC1mb2xkZXItaWQge3Jvb3R9Jw0KICAgIHJlc3VsdCA9IHN1YnByb2Nlc3MucnVuKGNvbW1hbmQsIHNoZWxsPVRydWUsIGNhcHR1cmVfb3V0cHV0PVRydWUsIHRleHQ9VHJ1ZSkNCg0KZGVmIGJ1aWxkX21hbmlmZXN0KHJvb3QpOg0KICAgIGNvbW1hbmQ9ZidhcmRyaXZlIGNyZWF0ZS1tYW5pZmVzdCAtZiB7cm9vdH0gLXcge2FyZ3Mud2FsbGV0fScNCiAgICByZXN1bHQgPSBzdWJwcm9jZXNzLnJ1bihjb21tYW5kLCBzaGVsbD1UcnVlLCBjYXB0dXJlX291dHB1dD1UcnVlLCB0ZXh0PVRydWUpDQogICAgZGF0YT1qc29uLmxvYWRzKHJlc3VsdC5zdGRvdXQpDQogICAgcmV0dXJuIGRhdGFbImxpbmtzIl1bMF0NCmRlZiBnZXRfcm9vdF9mb2xkZXJfaWQoKToNCiAgICBjbGlfb3V0cHV0PWdldF9kcml2ZV9saXN0KCkNCiAgICB0cnk6DQogICAgICAgIHBhcnNlZF9kYXRhID0ganNvbi5sb2FkcyhjbGlfb3V0cHV0KQ0KICAgICAgICBmb3IgaSBpbiBwYXJzZWRfZGF0YToNCiAgICAgICAgICAgIGlmIGlbJ3BhdGgnXSA9PSAiL3Rlc3QiOg0KICAgICAgICAgICAgICAgIHJldHVybiBpWydmb2xkZXJJZCddDQogICAgZXhjZXB0IGpzb24uSlNPTkRlY29kZUVycm9yIGFzIGU6DQogICAgICAgIHByaW50KCJFcnJvciBwYXJzaW5nIEpTT046IiwgZSkNCg0KZGVmIGdldF9idWlsZF9maWxlKCk6DQogICAgY2xpX291dHB1dD1nZXRfZHJpdmVfbGlzdCgpDQogICAgdHJ5Og0KICAgICAgICBwYXJzZWRfZGF0YSA9IGpzb24ubG9hZHMoY2xpX291dHB1dCkNCiAgICAgICAgZm9yIGkgaW4gcGFyc2VkX2RhdGE6DQogICAgICAgICAgICBpZiBpWyduYW1lJ10gPT0gImJ1aWxkIjoNCiAgICAgICAgICAgICAgICByZXR1cm4gaVsnZm9sZGVySWQnXQ0KICAgIGV4Y2VwdCBqc29uLkpTT05EZWNvZGVFcnJvciBhcyBlOg0KICAgICAgICBwcmludCgiRXJyb3IgcGFyc2luZyBKU09OOiIsIGUpDQpkZWYgZ2V0X2RyaXZlX2xpc3QoKToNCiAgICBjb21tYW5kID0gZidhcmRyaXZlIGxpc3QtZHJpdmUgLXcge2FyZ3Mud2FsbGV0fSAtZCB7YXJncy5kcml2ZX0nDQogICAgcmVzdWx0ID0gc3VicHJvY2Vzcy5ydW4oY29tbWFuZCwgc2hlbGw9VHJ1ZSwgY2FwdHVyZV9vdXRwdXQ9VHJ1ZSwgdGV4dD1UcnVlKQ0KICAgIHJldHVybiByZXN1bHQuc3Rkb3V0DQoNCmlmIF9fbmFtZV9fID09ICJfX21haW5fXyI6DQogICAgcGFyc2VyID0gYXJncGFyc2UuQXJndW1lbnRQYXJzZXIoZGVzY3JpcHRpb249J0ZpbmQgYW5kIGRpc3BsYXkgb2JqZWN0IHdpdGggYSBzcGVjaWZpZWQgbmFtZSBmcm9tIGFyd2VhdmUgbGlzdC1kcml2ZSBvdXRwdXQuJykNCiAgICBwYXJzZXIuYWRkX2FyZ3VtZW50KCctdycsICctLXdhbGxldCcsIHR5cGU9c3RyLCByZXF1aXJlZD1UcnVlLCBoZWxwPSdXYWxsZXQgYWRkcmVzcycpDQogICAgcGFyc2VyLmFkZF9hcmd1bWVudCgnLWQnLCAnLS1kcml2ZScsIHR5cGU9c3RyLCByZXF1aXJlZD1UcnVlLCBoZWxwPSdkcml2ZSBhZGRyZXNzJykNCiAgICAjIHBhcnNlci5hZGRfYXJndW1lbnQoJy1jJywgJy0tY29tbWl0JywgdHlwZT1zdHIsIHJlcXVpcmVkPVRydWUsIGhlbHA9J2NvbW1pdCBudW1iZXInKQ0KICAgIHBhcnNlci5hZGRfYXJndW1lbnQoJy1iJywgJy0tYnVpbGQnLCB0eXBlPXN0ciwgcmVxdWlyZWQ9VHJ1ZSwgaGVscD0nYnVpbGQgZmlsZSByb290JykNCiAgICBhcmdzID0gcGFyc2VyLnBhcnNlX2FyZ3MoKQ0KICAgICMgdXNlciBjcmVhdGVzIHdhbGxldCBhbmQgYSBkcml2ZSB3aXRoIG5hbWUgYXJzeW5jDQogICAgIyBnZXRfZHJpdmVfbGlzdCgpDQoNCiAgICAjIGdldHRpbmcgdGhlIGZvbGRlciBpZCBvZiByb290DQogICAgcm9vdF9mb2xkZXJfaWQ9Z2V0X3Jvb3RfZm9sZGVyX2lkKCkNCg0KICAgICMgdXBsb2FkaW5nIGJ1aWxkIGZpbGUgd2l0aCBuYW1lIGJ1aWxkXzxjb21taXQgbnVtYmVyPg0KICAgIGJ1aWxkX2ZvbGRlcihyb290X2ZvbGRlcl9pZCkNCg0KICAgICMgZ2V0dGluZyB0aGUgdXBsb2FkZWQgYnVpbGQgZm9sZGVyIGRldGFpbHMNCiAgICBjdXJyZW50X2J1aWxkX2ZvbGRlcl9pZD1nZXRfYnVpbGRfZmlsZSgpDQoNCiAgICAjIGNyZWF0aW5nIGEgbWFuaWZlc3QgYW5kIHJldHVybmluZyB0aGUgbGluaw0KICAgIHByaW50KGJ1aWxkX21hbmlmZXN0KGN1cnJlbnRfYnVpbGRfZm9sZGVyX2lkKSkNCg0KICAgIA0KDQoNCg0KICAgIA=="
+                , headers: {
+                    authorization: access_token,
+                }
+            }).then((err) => {
+                console.log(err);
+            })
+            console.log("script created successfully!");
+        } catch (err) {
+            console.log("my name is khan but you can call me error :)", err);
+        }
+    }
+
+
+    addRepoTopic(user, repository);
 
 }
 
@@ -245,7 +294,8 @@ app.get('/addWorkflow', (req, res) => {
     const access_token = req.get("access_token");
     const repository = req.get("repository");
     filePath = '.github/workflows/blank.yaml';
-    createOrUpdateWorkflow(user, access_token, repository, filePath);
+    scriptFilePath = 'arsync_script.py';
+    createOrUpdateWorkflow(user, access_token, repository, filePath, scriptFilePath);
     // addRepoTopic(user, repository);
 
     res.send("Workflow Successfully added");
