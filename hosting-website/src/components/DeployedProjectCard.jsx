@@ -5,6 +5,27 @@ import Avatar from 'boring-avatars';
 
 export default function DeployedProjectCard(props) {
 
+    function getTimeAgo(timestamp) {
+        const now = new Date();
+        const targetTime = new Date(timestamp);
+        const timeDifference = now - targetTime;
+    
+        const seconds = Math.floor(timeDifference / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+    
+        if (days > 0) {
+            return `${days}d ago`;
+        } else if (hours > 0) {
+            return `${hours}hr ago`;
+        } else if (minutes > 0) {
+            return `${minutes}min ago`;
+        } else {
+            return `${seconds}sec ago`;
+        }
+    }
+
     return (
         <div className="border border-[var(--primary-light)] hover:border-[var(--text)] rounded-lg h-48 overflow:hidden p-5" >
 
@@ -32,7 +53,7 @@ export default function DeployedProjectCard(props) {
             </div>
 
             <div className='text-sm text-[var(--text-primary)] mt-8'>
-                <p>{props.data.lastUpdatedOn}</p>
+                <p>{getTimeAgo(props.data.lastUpdatedOn)}</p>
             </div>
         </div>
     );
