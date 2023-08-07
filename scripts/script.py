@@ -5,6 +5,11 @@ def build_folder(root):
     command=f'ardrive upload-file -l "{args.build}_{args.commit}" -w {args.wallet} --parent-folder-id {root}'
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
 
+def build_manifest(root):
+    command=f'ardrive create-manifest -f {root} -w {args.wallet}'
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    data=json.loads(result.stdout)
+    return data["links"]
 def get_root_folder_id():
     cli_output=get_drive_list()
     try:
@@ -50,7 +55,9 @@ if __name__ == "__main__":
     # current_build_folder_id=get_build_file()
 
     # creating a manifest and returning the link
-    
+    current_build_folder_id='4c20446a-c0d3-4ad1-abd8-c064fe74ffcb'
+
+    print(build_manifest(current_build_folder_id)[0])
 
     
 
