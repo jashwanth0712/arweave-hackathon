@@ -1,5 +1,6 @@
 import image from '../assets/images/Asset-1.png';
 import '../styles/StartingPage.css';
+import { Link } from "react-router-dom";
 
 function StartingPage() {
   return (
@@ -10,12 +11,15 @@ function StartingPage() {
         workflows, and infrastructure to build a faster, 
         more personalized Web</p>
       <div className='Buttons'>
-        <button className='StartDeploying' href= 'https://github.com/login/oauth/authorize?client_id={process.env.clientId}'>
-          <p>Start Deploying</p>
-        </button>
-        <button className='GetDemo'>
-          <p>Get Demo</p>
-        </button>
+        <Link to='/dashboard'>
+          <button className='StartDeploying' href= 'https://github.com/login/oauth/authorize?client_id={process.env.clientId}'>
+            <p>Start Deploying</p>
+          </button>
+        </Link>
+        {/* <button className='GetDemo'>Get Demo</button> */}
+        <Link to='/lottie'>
+          <button className='GetDemo'>Get Demo</button>
+        </Link>
       </div>
 
       <p className='spacingLetters'>TRUSTED BY THE BEST FRONTEND TEAMS</p>

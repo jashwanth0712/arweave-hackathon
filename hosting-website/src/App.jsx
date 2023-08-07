@@ -11,6 +11,11 @@ import AddNewProject from './pages/AddNew';
 import StartingPage from './pages/StartingPage';
 import Callback from './components/callback';
 import Details from './pages/details/details'
+import UncontrolledLottie from './components/LottiePage';
+import ProtectedRoute from './utils/ProtectedRoutes'
+import Login from './pages/Login'
+import ProtectedRoutes from './utils/ProtectedRoutes'
+
 function App() {
 
   return (
@@ -18,11 +23,15 @@ function App() {
       <main className='max-w-5xl mx-auto'>
         <Navbar />
         <Routes>
-          <Route path='/' element={<StartingPage />} />
+          <Route element={<ProtectedRoutes />}>
+          </Route>
           <Route path='/dashboard' element={<HomePage />} />
           <Route path='/addNew' element={<AddNewProject />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<StartingPage />} />
           <Route path='/callback' element={<Callback />} />
           <Route path='/details' element={<Details />} />
+          <Route path='/lottie' element={<UncontrolledLottie />} />
         </Routes>
       </main>
     </Router>

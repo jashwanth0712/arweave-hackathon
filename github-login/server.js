@@ -17,40 +17,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // console.log(">>", process);
-const accessToken = process.env.G_AUTH;
-const octokit = new Octokit({
-    auth: accessToken,
-});
-
-
-async function getTags(user, repository) {
-    const result = await octokit.request('GET /repos/{owner}/{repo}/tags', {
-        owner: user,
-        repo: repository,
-        headers: {
-            authorization: accessToken,
-        }
-    })
-    // console.log(result["data"]);
-    return result["data"];
-}
-
-async function addTags(user, repository) {
-    const commit_sha = await getLatestCommit(user, repository);
-    // console.log(commit_sha);
-    await octokit.request('POST /repos/{owner}/{repo}/git/tags', {
-        owner: user,
-        repo: repository,
-        tag: 'arsync',
-        message: 'arsync message',
-        object: commit_sha,
-        type: 'commit',
-        headers: {
-            authorization: accessToken,
-        }
-    })
-    console.log("Tag added successfully!");
-}
+// // var accessToken = undefined;
+// console.log(accessToken);
+var octokit = undefined;
+// var username = undefined;
 
 async function addRepoTopic(user, repository) {
     await octokit.request('PUT /repos/{owner}/{repo}/topics', {
@@ -65,13 +35,21 @@ async function addRepoTopic(user, repository) {
     })
 }
 
-async function getRepositories(user, filter = "all") {
+async function getRepositories(user, access_token, filter = "all") {
+    octokit = new Octokit({
+        auth: access_token,
+        request: {
+            fetch,
+        }
+    });
+
     const result = await octokit.request('GET /users/{username}/repos', {
         username: user,
         headers: {
-            authorization: accessToken,
+            authorization: access_token,
         }
     })
+    console.log("this is result : ", result);
     var repo = [];
     for (let i = 0; i < result["data"].length; i++) {
         if (filter == "all") {
@@ -87,7 +65,7 @@ async function getRepositories(user, filter = "all") {
             if (result["data"][i]["topics"][0] == "arsync") {
                 var repoJSON = {
                     "name": result["data"][i]["name"],
-                    "commit_msg": await getLatestCommit(user, result["data"][i]["name"]),
+                    "commit_msg": await getLatestCommit(user, result["data"][i]["name"], access_token),
                     "updated_at": result["data"][i]["updated_at"],
                 }
                 // console.log(tags);
@@ -97,40 +75,16 @@ async function getRepositories(user, filter = "all") {
         }
         // console.log(result["data"][i]["name"]);
     };
+    console.log("This is very important please print please : ", repo)
     return repo;
 }
 
-async function getArsyncRepositories(user) {
-    const result = await octokit.request('GET /users/{username}/repos', {
-        username: user,
-        headers: {
-            authorization: accessToken,
-        }
-    })
-    var repo = [];
-    for (let i = 0; i < result["data"].length; i++) {
-        // const tags = await getTags(user, result["data"][i]["name"])
-        if (result["data"][i]["topics"][0] == "arsync") {
-            var repoJSON = {
-                "name": result["data"][i]["name"],
-                "commit_msg": await getLatestCommit(user, result["data"][i]["name"]),
-                "updated_at": result["data"][i]["updated_at"],
-            }
-            // console.log(tags);
-            repo.push(repoJSON);
-            // console.log(result["data"][i]["name"]);
-        };
-
-    }
-    return repo;
-}
-
-async function getLatestCommit(user, repository) {
+async function getLatestCommit(user, repository, access_token) {
     const commitList = await octokit.request('GET /repos/{owner}/{repo}/commits', {
         owner: user,
         repo: repository,
         headers: {
-            authorization: accessToken,
+            authorization: access_token,
         }
     })
     return commitList["data"][0]["commit"]["message"];
@@ -220,6 +174,13 @@ function send_mail() {
 }
 
 
+
+
+
+app.get('/', (req, res) => {
+    res.send("This page currently does nothing :) Navigate to /addWorkflow to add a workflow. Navigate to /repos to view user repos");
+});
+
 app.get('/getAccessToken', async function (req, res) {
     const code = req.query.code;
     console.log('code', code, CLIENT_ID, CLIENT_SECRET);
@@ -233,17 +194,35 @@ app.get('/getAccessToken', async function (req, res) {
         return response.json();
     }).then((data) => {
         console.log(data);
+        // accessToken = data.access_token;
+        // octokit = new Octokit({
+        //     auth: accessToken,
+        // });
+        // const userdata = getUserData();
+        // username = userdata.login;
+        res.json(data);
+    });
+});
+
+app.get('/getUserData', async function (req, res) {
+    req.get('Authorization');
+    await fetch('https://api.github.com/user', {
+        method: 'GET',
+        headers: {
+            "Accept": "application/json",
+            "Authorization": req.get('Authorization'),
+        }
+    }).then((response) => {
+        return response.json();
+    }).then((data) => {
+        console.log(data);
         res.json(data);
     });
 });
 
 
-app.get('/', (req, res) => {
-    res.send("This page currently does nothing :) Navigate to /addWorkflow to add a workflow. Navigate to /repos to view user repos");
-});
-
 app.get('/addWorkflow', (req, res) => {
-    user = "M-sasank";
+    user = username;
     repository = 'arweave-hackathon';
     filePath = '.github/workflows/blank.yaml';
     createOrUpdateWorkflow(user, repository, filePath);
@@ -253,39 +232,25 @@ app.get('/addWorkflow', (req, res) => {
 });
 
 app.get('/all_repos', async (req, res) => {
-    user = "M-sasank";
+    const user = req.get("username");
+    const access_token = req.get("access_token");
     // repository = 'arweave-hackathon';
     // const result = await getRepositories(user);
-    result = await getRepositories(user);
+    result = await getRepositories(user, access_token);
     res.send(result);
 });
 
 app.get('/arsync_repos', async (req, res) => {
-    user = "M-sasank";
-    repository = 'arweave-hackathon';
+    const user = req.get("username");
+    const access_token = req.get("access_token");
     // const result = await getRepositories(user);
-    result = await getRepositories(user, "arsync");
+    result = await getRepositories(user, access_token, "arsync");
     res.send(result);
 });
 
 app.post('/email', (req, res) => {
     send_mail();
     res.send("Email sent successfully");
-});
-app.get('/getUserData', async function (req, res) {
-    req.get('Authorization');
-    await fetch('https://api.github.com/user', {
-        method: 'GET',
-        headers: {
-            "Accept": "application/json",
-            "Authorization": req.get('Authorization')
-        }
-    }).then((response) => {
-        return response.json();
-    }).then((data) => {
-        console.log(data);
-        res.json(data);
-    });
 });
 
 app.listen(3000, function () {
