@@ -11,16 +11,10 @@ function StartingPage() {
     loop: true,
     autoplay: true,
     animationData : animation,
-    // here is where we will declare lottie animation
-    // "animation" is what we imported before animationData: animation,
     rendererSettings: {
       preserveAspectRatio: "none",
     },
  };
-
-
-
-
 
   return (
     <div className="App">
@@ -70,7 +64,6 @@ function StartingPage() {
       <div className='flex align-top gap-5 w-fit mx-auto'>
         <div className='mx-auto relative'>
           <div className="h-10 w-10 bg-[#603EAA] rounded-full grid place-content-center font-bold text-base text-[white]">3</div>
-          
           <div className='absolute left-14 top-0 w-max text-start max-w-xs'>
             <p className='text-3xl font-bold'>Deploy 🎉</p>
             <p className='text-sm mt-1 text-[var(--text-primary)]'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut culpa incidunt deleniti magni, fugiat corrupti dolorem sed alias voluptas consequuntur?</p>
@@ -80,11 +73,9 @@ function StartingPage() {
 
       <div className='flex mt-[8rem]'>
         <div className='w-[650px] text-left'>hello</div>
-
-      <div className=''>
-         <Lottie options={defaultOptions} height={400} width={500} />
-      </div>
-        
+        <div className=''>
+          <Lottie options={defaultOptions} height={400} width={500} />
+        </div>
       </div>
 
     </div>
