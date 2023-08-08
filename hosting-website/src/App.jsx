@@ -4,13 +4,12 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Navbar from './components/Navbar'
 import HomePage from './pages/HomePage'
-
+import LicensePage from './pages/LicensePage'
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AddNewProject from './pages/AddNew';
 import StartingPage from './pages/StartingPage';
 import Callback from './components/callback';
-import UncontrolledLottie from './components/LottiePage';
 import ProtectedRoute from './utils/ProtectedRoutes'
 import Login from './pages/Login'
 import ProtectedRoutes from './utils/ProtectedRoutes'
@@ -29,7 +28,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/' element={<StartingPage />} />
           <Route path='/callback' element={<Callback />} />
-          <Route path='/lottie' element={<UncontrolledLottie />} />
+          <Route path='/license' element={<LicensePage />} />
         </Routes>
       </main>
     </Router>
