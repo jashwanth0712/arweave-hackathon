@@ -9,10 +9,10 @@ export default function HomePage() {
     const [isLoading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [userData, setUserData] = useState({});
-    
+
     useEffect(() => {
         setLoading(true);
-        if(localStorage.getItem("accessToken") && localStorage.getItem("username")) {
+        if (localStorage.getItem("accessToken") && localStorage.getItem("username")) {
             console.log("Fetching data");
             // getUserData();
             fetchData();
@@ -77,7 +77,7 @@ export default function HomePage() {
     }
 
     return (
-        <>  
+        <>
             {isLoading && <LoadingSpinner />}
             <div className='flex gap-2 mt-5'>
                 {/* {data ? data[0].name : "Loading..."} */}
@@ -108,7 +108,7 @@ export default function HomePage() {
                                 data={{
                                     profile: getRandomProfile(),
                                     title: item.name,
-                                    link: "placement-cell.bay.vercel.app",
+                                    link: item.url,
                                     latestCommit: item.commit_msg,
                                     lastUpdatedOn: item.updated_at
                                 }}
