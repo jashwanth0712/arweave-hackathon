@@ -1,9 +1,19 @@
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
-
+import { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 export default function Success() {
     const { width, height } = useWindowSize();
+    const navigate = useNavigate();
+  // Set a timer to navigate to /dashboard after 4 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        navigate('/dashboard');
+    }, 4000); // 4000 milliseconds = 4 seconds
 
+    // Clean up the timer if the component unmounts
+    return () => clearTimeout(timer);
+});
     return (
         <>
             <Confetti width={width} height={height} recycle={false} />
