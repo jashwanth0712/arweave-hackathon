@@ -69,6 +69,8 @@ Connect with your ardrive Account to complete your website deployment.
 
 ### License
 
+Fill the form that appears and click create
+
 ### Links
 
 Congrats 🥳🥳, You have successfully deployed your website with the help of ARSync.
