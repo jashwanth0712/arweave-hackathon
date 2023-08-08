@@ -25,7 +25,7 @@ export default function HomePage() {
 
     const fetchData = async () => {
         try {
-            const repoData = await fetch('http://localhost:3000/arsync_repos', {
+            const repoData = await fetch('https://arweave-hackathon-jashwanth0712.vercel.app/arsync_repos', {
                 method: 'GET',
                 headers: {
                     username: localStorage.getItem("username"),
@@ -55,7 +55,7 @@ export default function HomePage() {
 
         if (codeParam && (localStorage.getItem("accessToken") === null)) {
             async function getAccessToken() {
-                await fetch('http://localhost:3000/getAccessToken?code=' + codeParam, {
+                await fetch('https://arweave-hackathon-jashwanth0712.vercel.app/getAccessToken?code=' + codeParam, {
                     method: 'GET',
                 }).then((response) => {
                     return response.json()
@@ -63,7 +63,7 @@ export default function HomePage() {
                     console.log(data);
                     if (data.access_token) {
                         localStorage.setItem("accessToken", data.access_token);
-                        window.location.href = "http://localhost:5173/dashboard";
+                        window.location.href = "https://arsync.vercel.app/dashboard";
                     }
                 })
             }
