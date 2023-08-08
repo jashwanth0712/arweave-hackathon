@@ -2,7 +2,7 @@ import DeployForm from "./deployform/deployform";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
-
+import image from '../assets/images/ardrivelogo.png'
 
 
 
@@ -113,12 +113,44 @@ export default function AddNewProject() {
                     
                 </div>
             </div>
-            <div className="bg-black border border-[var(--primary-dark)] rounded-xl p-10 mt-20 ">
-            <p className="text-2xl font-semibold text-center ">Login</p>
-            <input type="text" id="seedPhrase" className='mt-[30px] text-md w-[100px] placeholder-[var(--primary-light)]' value={seedPhrase} placeholder='Enter Seed Phrase' onChange={(e) => setseedPhrase(e.target.value)} required />
-             <div>
-                
-             </div>
+            <div className="bg-black border border-[var(--primary-dark)] rounded-xl p-10 mt-[8%] h-[580px] w-[380px]">
+            <p className="text-2xl font-semibold text-center ">Login in with <img className="mt-1" src={image} alt="" /></p>
+           
+             
+<div class="flex items-center justify-center w-full mt-10">
+    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-44 border-2 border-[var(--primary-dark)] border-dashed rounded-lg cursor-pointer bg-transparent  dark:bg-transparent  dark:hover:border-gray dark:hover:bg-gray">
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            </svg>
+            <p className="text-white">Select a KeyFile
+            
+            </p>
+        </div>
+        <input id="dropzone-file" type="file" class="hidden" />
+        
+    </label>
+
+
+   
+</div> 
+
+<div className="mt-2 flex justify-center">   <button className="bg-white text-black center">Login</button></div>
+
+<div className="text-center mt-[20px] ">
+    <a href="" className="text-white underline">
+<p>How Does keyfile log in work?</p>
+</a>
+
+</div>
+
+<div className="text-center mt-[40px] ">
+    <a href="" className="text-white underline">
+<p>New User?Get Started Here!</p>
+</a>
+
+</div>
+
 
 
             </div>
