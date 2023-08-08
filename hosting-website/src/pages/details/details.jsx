@@ -50,7 +50,7 @@ export default function Details() {
         <>
             <div className="bg-black h-96 w-full absolute top-0 left-0 right-0 -z-10"></div>
             
-            <div className="mt-10 flex">
+            <div className="mt-10 flex justify-between items-center">
                 <p className="text-4xl font-bold text-white whitespace-nowrap">{location.state.data.data.title}</p>
                 <div className="threebtn"> <button className='h-fit whitespace-nowrap'>Git Repository</button><button className='h-fit whitespace-nowrap'>Domains</button><button className='h-fit whitespace-nowrap'>Visit</button></div>
             </div>
