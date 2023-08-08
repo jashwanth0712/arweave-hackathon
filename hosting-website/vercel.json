@@ -3,6 +3,9 @@
       { "src": "/", "dest": "/" },
       { "src": "/dashboard", "dest": "/" }
     ],
+    "rewrites":  [
+        {"source": "/(.*)", "destination": "/"}
+      ],
     "headers": [
         {
           "source": "/(.*)",
