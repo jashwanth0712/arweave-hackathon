@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import step_1 from '../assets/images/Step 1.gif' 
+import step_2 from '../assets/images/Step 2.gif' 
 
 const imageLinks = [
     step_1,
-    "https://imgs.search.brave.com/_RtpHldsu_U1uPCUT-8j93uhPyK3zl0Gf1aDnFzYjdA/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9taXJv/Lm1lZGl1bS5jb20v/djIvMSo3SWFDTnVl/WjRxcjRHTXFVdGNW/WVdRLnBuZw",
-
+    step_2 
   // Add more image links as needed
 ];
 
@@ -18,7 +18,7 @@ export default function PopupModal() {
     if (showModal) {
       imageInterval = setInterval(() => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageLinks.length);
-      }, 5000);
+      }, 3000);
     } else {
       clearInterval(imageInterval);
     }
@@ -34,7 +34,7 @@ export default function PopupModal() {
     if (showModal) {
       closeTimeout = setTimeout(() => {
         setShowModal(false);
-      }, 15000);
+      }, 9000);
     } else {
       clearTimeout(closeTimeout);
     }
