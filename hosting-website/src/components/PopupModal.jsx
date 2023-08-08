@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import step_1 from '../assets/images/Step 1.gif' 
-import step_2 from '../assets/images/Step 2.gif' 
+import step_2 from '../assets/images/Step 2.gif'
+import step_3 from '../assets/images/Step 3.PNG' 
+import step_4 from '../assets/images/Step 4.PNG' 
 
 const imageLinks = [
     step_1,
-    step_2 
+    step_2,
+    step_3,
+    step_4
   // Add more image links as needed
 ];
 
@@ -34,7 +38,7 @@ export default function PopupModal() {
     if (showModal) {
       closeTimeout = setTimeout(() => {
         setShowModal(false);
-      }, 9000);
+      }, 12000);
     } else {
       clearTimeout(closeTimeout);
     }
