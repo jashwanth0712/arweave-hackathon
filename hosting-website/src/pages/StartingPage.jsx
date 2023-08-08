@@ -29,6 +29,7 @@ function StartingPage() {
             <p>Start Deploying</p>
           </button>
         </Link>
+
         {/* <button className='GetDemo'>Get Demo</button> */}
         <PopupModal/>
       </div>
@@ -69,7 +70,7 @@ function StartingPage() {
         </div>
       </div>
 
-      <div className='flex mt-[8rem]'>
+      <div className='flex mt-[10rem]'>
         <div className='w-[650px] text-left'>hello</div>
         <div className=''>
           <Lottie options={defaultOptions} height={400} width={500} />
