@@ -20,9 +20,7 @@ function StartingPage() {
     <div className="App">
       <div className='arsync'><img className='image' src={image} alt='Asset-2'/>
       <h3 className='heading'>arsync</h3></div>
-      <p className='vercel'>Vercel's frontend cloud gives developers the frameworks, 
-        workflows, and infrastructure to build a faster, 
-        more personalized Web</p>
+      <p className='vercel'>ARSync gives you the best user experience and fast deployment of websites with a single click.</p>
       <div className='Buttons'>
         <Link to='/dashboard'>
           <button className='StartDeploying'>
@@ -35,7 +33,6 @@ function StartingPage() {
       </div>
 
       <p className='spacingLetters'>TRUSTED BY THE BEST FRONTEND TEAMS</p>
-      <p className='spacingLetters'>EXPLORE THE VERCEL WAY</p>
 
 
       <div className='flex align-top gap-5 w-fit mx-auto mt-20'>
@@ -43,8 +40,8 @@ function StartingPage() {
           <div className="h-10 w-10 bg-[#603EAA] rounded-full grid place-content-center font-bold text-base text-[white]">1</div>
           <div className='h-40 w-[1px] bg-[#603EAA] mx-auto'></div>
           <div className='absolute left-14 top-0 w-max text-start max-w-xs'>
-            <p className='text-3xl font-bold'>Create New Project</p>
-            <p className='text-sm mt-1 text-[var(--text-primary)]'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut culpa incidunt deleniti magni, fugiat corrupti dolorem sed alias voluptas consequuntur?</p>
+            <p className='text-3xl font-bold'>Import project</p>
+            <p className='text-sm mt-1 text-[var(--text-primary)] text-[19px]'>Login with your github account and import your project from your github repositories to start deploying your project.</p>
           </div>
         </div>
       </div>
@@ -54,8 +51,8 @@ function StartingPage() {
           <div className="h-10 w-10 bg-[#603EAA] rounded-full grid place-content-center font-bold text-base text-[white]">2</div>
           <div className='h-40 w-[1px] bg-[#603EAA] mx-auto'></div>
           <div className='absolute right-14 top-0 w-max text-start max-w-xs'>
-            <p className='text-3xl font-bold'>Choose a framework</p>
-            <p className='text-sm mt-1 text-[var(--text-primary)]'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut culpa incidunt deleniti magni, fugiat corrupti dolorem sed alias voluptas consequuntur?</p>
+            <p className='text-3xl font-bold'>Connect with ardrive wallet</p>
+            <p className='text-sm mt-1 text-[var(--text-primary)] text-[19px]'>Connect your ardrive wallet to finish deployment of your project.</p>
           </div>
         </div>
       </div>
@@ -65,13 +62,13 @@ function StartingPage() {
           <div className="h-10 w-10 bg-[#603EAA] rounded-full grid place-content-center font-bold text-base text-[white]">3</div>
           <div className='absolute left-14 top-0 w-max text-start max-w-xs'>
             <p className='text-3xl font-bold'>Deploy 🎉</p>
-            <p className='text-sm mt-1 text-[var(--text-primary)]'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut culpa incidunt deleniti magni, fugiat corrupti dolorem sed alias voluptas consequuntur?</p>
+            <p className='text-sm mt-1 text-[var(--text-primary)] text-[19px]'>Congrats, you have successfully deployed your website.</p>
           </div>
         </div>
       </div>
 
       <div className='flex mt-[10rem]'>
-        <div className='w-[650px] text-left'>hello</div>
+        <div className='w-[650px] text-left text-[19px]'>Welcome to arsync, your ultimate solution for effortless Continuous Integration and Continuous Deployment CI/CD of ardrive hosted websites🤯. We understand the challenges that developers face when it comes to maintaining seamless updates and deployments for their ardrive-hosted projects 🫂. With ARSync, we've revolutionized the process🤩, making it easier than ever to keep your websites up-to-date and running smoothly.😉</div>
         <div className=''>
           <Lottie options={defaultOptions} height={400} width={500} />
         </div>

@@ -6,7 +6,7 @@
 </h1>
 
 No more deployment headaches! ARSync's streamlined CI/CD pipeline makes updating your ARDrive hosted websites a walk in the park.
-
+![home](https://raw.githubusercontent.com/jashwanth0712/arweave-hackathon/main/images/home.png)
 ## About arsync
 Welcome to arsync, your ultimate solution for effortless Continuous Integration and Continuous Deployment **(CI/CD) of ardrive hosted websites**🤯. We understand the challenges that developers face when it comes to maintaining seamless updates and deployments for their ardrive-hosted projects 🫂. With ARSync, we've revolutionized the process🤩, making it easier than ever to keep your websites up-to-date and running smoothly.😉
 
