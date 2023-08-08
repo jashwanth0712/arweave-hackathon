@@ -28,28 +28,28 @@ export default function LicensePage() {
 
   const createTransaction = async () => {
     const key = 'AjI__UjACNLiVgROvGyfJI66J5sz6P2a3zyZMQmMq4A'
-    // const transaction = await arweave.createTransaction(
-    //   {
-    //     data: "Hello, world!",
-    //     tags: [
-    //       {
-    //         name: "License",
-    //         value: "yRj4a5KMctX_uOmKWCFJIjmY8DeJcusVk6-HzLiM_t8",
-    //       },
-    //     ],
-    //   },
-    //   key,
-    // );
+    const transaction = await arweave.createTransaction(
+      {
+        data: "Hello, world!",
+        tags: [
+          {
+            name: "License",
+            value: "yRj4a5KMctX_uOmKWCFJIjmY8DeJcusVk6-HzLiM_t8",
+          },
+        ],
+      },
+      key,
+    );
 
-    // console.log("Transaction:", transaction);
-    let transaction = await arweave.createTransaction({
-        target: '1seRanklLU_1VTGkEk7P0xAwMJfA7owA1JHW5KyZKlY',
-        quantity: arweave.ar.arToWinston('10.5')
-    }, key);
+    // // console.log("Transaction:", transaction);
+    // let transaction = await arweave.createTransaction({
+    //     target: '1seRanklLU_1VTGkEk7P0xAwMJfA7owA1JHW5KyZKlY',
+    //     quantity: arweave.ar.arToWinston('10.5')
+    // }, key);
     
-    await arweave.transactions.sign(transaction, key);
+    // await arweave.transactions.sign(transaction, key);
     
-    console.log(transaction);
+    // console.log(transaction);
   };
 
   return (
