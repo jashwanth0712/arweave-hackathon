@@ -2,6 +2,7 @@ import './Deployed.css'
 import branchLogo from '../assets/images/branch.svg';
 import jazzicon from '@metamask/jazzicon';
 import Avatar from 'boring-avatars';
+import { useNavigate } from 'react-router-dom';
 
 export default function DeployedProjectCard(props) {
 
@@ -25,9 +26,18 @@ export default function DeployedProjectCard(props) {
             return `${seconds}sec ago`;
         }
     }
+    
+    const navigate = useNavigate();
+    const redirectToDetails = (data) => {
+        navigate('/details', { 
+            state: {
+                data: data
+            }
+        })
+    }
 
     return (
-        <div className="border border-[var(--primary-light)] hover:border-[var(--text)] rounded-lg h-48 overflow:hidden p-5" >
+        <div onClick={() => redirectToDetails(props)} className="border border-[var(--primary-light)] hover:border-[var(--text)] rounded-lg h-48 overflow:hidden p-5" >
 
             <div className='flex items-center gap-3'>
                 <Avatar 

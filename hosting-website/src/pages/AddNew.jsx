@@ -21,7 +21,7 @@ export default function AddNewProject() {
 
     const fetchData = async () => {
         try {
-            const repoData = await fetch('http://localhost:3000/all_repos', {
+            const repoData = await fetch('https://arweave-hackathon-jashwanth0712.vercel.app/all_repos', {
                 method: 'GET',
                 headers: {
                     username: localStorage.getItem("username"),

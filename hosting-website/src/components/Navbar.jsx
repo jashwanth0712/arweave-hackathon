@@ -14,7 +14,7 @@ export default function Navbar() {
 
     const handleLogout = () => {
         localStorage.removeItem("accessToken");
-        window.location.href = "http://localhost:5173";
+        window.location.href = "https://arsync.vercel.app/";
     }
 
     // function storeUserData() {
@@ -29,7 +29,7 @@ export default function Navbar() {
     }, []);
 
     async function getUserData() {
-        await fetch('http://localhost:3000/getUserData', {
+        await fetch('https://arweave-hackathon-jashwanth0712.vercel.app/getUserData', {
             method: 'GET',
             headers: {
                 "Authorization": "token " + localStorage.getItem("accessToken"),

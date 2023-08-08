@@ -9,10 +9,10 @@ export default function HomePage() {
     const [isLoading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [userData, setUserData] = useState({});
-    
+
     useEffect(() => {
         setLoading(true);
-        if(localStorage.getItem("accessToken") && localStorage.getItem("username")) {
+        if (localStorage.getItem("accessToken") && localStorage.getItem("username")) {
             console.log("Fetching data");
             // getUserData();
             fetchData();
@@ -25,7 +25,7 @@ export default function HomePage() {
 
     const fetchData = async () => {
         try {
-            const repoData = await fetch('http://localhost:3000/arsync_repos', {
+            const repoData = await fetch('https://arweave-hackathon-jashwanth0712.vercel.app/arsync_repos', {
                 method: 'GET',
                 headers: {
                     username: localStorage.getItem("username"),
@@ -55,7 +55,7 @@ export default function HomePage() {
 
         if (codeParam && (localStorage.getItem("accessToken") === null)) {
             async function getAccessToken() {
-                await fetch('http://localhost:3000/getAccessToken?code=' + codeParam, {
+                await fetch('https://arweave-hackathon-jashwanth0712.vercel.app/getAccessToken?code=' + codeParam, {
                     method: 'GET',
                 }).then((response) => {
                     return response.json()
@@ -63,7 +63,7 @@ export default function HomePage() {
                     console.log(data);
                     if (data.access_token) {
                         localStorage.setItem("accessToken", data.access_token);
-                        window.location.href = "http://localhost:5173/dashboard";
+                        window.location.href = "https://arsync.vercel.app/dashboard";
                     }
                 })
             }
@@ -77,7 +77,7 @@ export default function HomePage() {
     }
 
     return (
-        <>  
+        <>
             {isLoading && <LoadingSpinner />}
             <div className='flex gap-2 mt-5'>
                 {/* {data ? data[0].name : "Loading..."} */}
@@ -108,7 +108,7 @@ export default function HomePage() {
                                 data={{
                                     profile: getRandomProfile(),
                                     title: item.name,
-                                    link: "placement-cell.bay.vercel.app",
+                                    link: item.url,
                                     latestCommit: item.commit_msg,
                                     lastUpdatedOn: item.updated_at
                                 }}
