@@ -57,6 +57,7 @@ export default function LicensePage() {
       <div className="bg-gray-800 p-8 rounded-lg">
         <h1 className="text-4xl text-white text-center ">License</h1>
         <h1 className="text-2xl font-medium  text-center pb-5 text-gray-400">Select the terms </h1>
+
         <fieldset class="mb-5">
         <legend class="sr-only">Checkbox variants</legend>
         <div class="flex items-start items-center mb-4">
