@@ -22,6 +22,109 @@ app.use(bodyParser.json());
 var octokit = undefined;
 // var username = undefined;
 
+async function addRepoVariables(user, repository, access_token) {
+    try {
+        await octokit.request('POST /repos/{owner}/{repo}/actions/variables', {
+            owner: user,
+            repo: repository,
+            name: "G_TOKEN",
+            value: access_token,
+            headers: {
+                authorization: access_token,
+            }
+        })
+    } catch {
+        await octokit.request('PATCH /repos/{owner}/{repo}/actions/variables/{name}', {
+            owner: user,
+            repo: repository,
+            name: "G_TOKEN",
+            value: access_token,
+            headers: {
+                authorization: access_token,
+            }
+        })
+    }
+    console.log("Added G_TOKEN");
+    try {
+        await octokit.request('POST /repos/{owner}/{repo}/actions/variables', {
+            owner: user,
+            repo: repository,
+            name: "BUILD_EXPORT_NAME",
+            value: "build",
+            headers: {
+                authorization: access_token,
+            }
+        })
+    } catch {
+        await octokit.request('PATCH /repos/{owner}/{repo}/actions/variables/{name}', {
+            owner: user,
+            repo: repository,
+            name: "BUILD_EXPORT_NAME",
+            value: "build",
+            headers: {
+                authorization: access_token,
+            }
+        })
+    }
+    console.log("Added BUILD_EXPORT_NAME");
+    try {
+        await octokit.request('POST /repos/{owner}/{repo}/actions/variables', {
+            owner: user,
+            repo: repository,
+            name: "DRIVE_ID",
+            value: "913e4aea-3197-4021-bcc3-c5e6af09b776",
+            headers: {
+                authorization: access_token,
+            }
+        })
+    } catch {
+        await octokit.request('PATCH /repos/{owner}/{repo}/actions/variables/{name}', {
+            owner: user,
+            repo: repository,
+            name: "DRIVE_ID",
+            value: "913e4aea-3197-4021-bcc3-c5e6af09b776",
+            headers: {
+                authorization: access_token,
+            }
+        })
+    }
+    console.log("Added DRIVE_ID");
+    try {
+        await octokit.request('POST /repos/{owner}/{repo}/actions/variables', {
+            owner: user,
+            repo: repository,
+            name: "WALLET_JSON",
+            value: "ewogICJrdHkiOiAiUlNBIiwKICAiZSI6ICJBUUFCIiwKICAibiI6ICJzVXc2b08xbWZySkZpdUJzc0Ixb2xRUUVNODlRRW0wdzg1YmtDVzhFSExWVFBwSEJqcmlwOXFqZ05la3Z6TnJDVG1aQjZBWEFYS2prbi0zNGhsT3p5c3VieFdOR1EtZVlKd09sWHp3N1g1QTFGX1o1NThzQWk0WndMNVYyRndfOXN2Mmk2MEpsVl9yRmRXcmgtakNhZHZXSmI5NDBLZjF5dUwwZzBTVEtKeTl1dVNiZ09Ia0oyLVR1bGtBOEtyQ2ppMkprTFRCQWVmYUNxc2dNNlRfUmQ3OGJXTFlDQWNDTTNvYnFnLVpMRzRzTWhWSWJyUjBBYjJkaEtqOVVXbUNHc2c1b2RQNnpNWEg0ZmdEZExRVEJDLThJdk9FM3JDUlBmM0d6Nmg5TFJHaUszemJBMGhpc0hNSTE0UUY4VzBpQTBsa2NtVThPNWY4SmkweDRpUWZWdm1uby12UzRzaDVVUXdZZFQ2NDJRY0VFbE5sQTk0TEZlOGd1NWt3TjZLeWNlQkNvS3dvXzFIX2U4YzZOU2o0QlNxbjZGUE44Wm15dW1vci1VUXZseEZtbklsMXFnNm42RVRSdkJMV19xel9zNUpRSDdhR1RwVGFETnZvZHU4dWhIOW5vaXhCcy10VnI1SDVXTkR6NnlVX1BhWmNHRDZNanVJZzZrVDhBU1dyZmlOMFdSY1VBM2ItWDNLZ3Jac2VFMGI4Y09kUnZjaTVFMmJNVGJCOTc0R2syd2tMMk9JR2FIcUVHWGp6NlkwY0hCMm4zTVFob3V2aVA2dExuYXdObXBoaUNjaVR4bmZZRnFvRXZ0S1JMVnZvaGs4OWtpREdiMDIxRXlacTktaElnY1NRdTdyR3dfSWhVSFlYbjhHa1NYRWN6dWduTmJyUXd4cGd2ODZMR1NFcyIsCiAgImQiOiAiUzFuWGJQLVlXTzVSS2ZXNW01dlVEOGoyTkVLLWlDWko4S3pIVzg4SDAxLW84bVdsLW84M0JQSy0zNHFzV3diNkg3SExfdDA2NU9hT3lfMnFhd1IxM0JGdXNaUkFqNm1FLThmTDU4N0VlUmZqeUx4akVRVXd4UnVzNER4SVJRTHgwcm1ESFROSnVQdUdJaUg3eW9ZUGo5Rkl5UGVKLWZLU2FEdFJFREh2akhuWE4tOXl5ZTFfS0NxQ3otNmE0NVhRMl9ORUdnUncwcVRXNGRoRnpIZm9BVm1DT05DWng3N2EzOVE5SlRPaDVpSFJmM1BtLVVyakhYVzFVT3c3WUhHM3JVTDhXQVRMaVk4amlnRzVfbUVQM28tSGlpYTVyM3A3SXZIakFmU3MyM1VHMkZqXzJBck9VeWFqR1c2MU9HSjNCVzhEX1pBaEI5UzliS3RpYXZLZWZ5bDBpMmZvM2J2RjZEVlZMQXdPSlJkVGlORTJzVXFoV25YSTgzaS1LSHBPMGY2MFBwRm82TlBzV2hnSmtidE9SVUM3dlR4R0VtVmdicmtUekFwSExWUnVkUk1JQ0xqakJWSXFtUVpHQThrMnBJc1VGZ0ROZ0NnUVJhU1IxcUs2c1lQWFpiUWlqbkhTN2xvODVpcEo5MFdhX0hUMXFsZ2FCOWVRNkZaVGxfakphN29SRmpCOHhnbF9DTHg2bmJTRjVuRlo4LXRqb3ZUZkFVNk1IUjR6TTEtT2tGbGw5NmhDY29yOU9WXy0xQTRlMmdRRDJNYTVhWlAzWmNIazhidVllUWR0VFE0enRQNWdid25PQ1JHUm15enFzOEk5aHZwVFJ4X1FXeHB3enZGMVJJUEpYZzNULWhuN3oyeGZpcklMSHp5OTFSR3lTbmEwTDVfSUhneTRXVkUiLAogICJwIjogIjdoUzdWLXRQWkhmQXBwQ2NkYUJ2ZzdyQk40U1I2NERDVm1pQjNXcWM1WXFxdFY5TldWeVVvTUc2Tm10MEhyYjZQQl9zMG5OV1I2U3ZnNUFlYkRLdmhBTTdwT01qdkRKRXI2cWF1OWItdzJMRFlwRTR5Y2lNUVJTek1xSDZsRFZPTVNhY3RVcmpCaFZzVXR1VnFtcDlkVHkwVjZienZleHBrZGFMbzFhTnRJZE92LVRjTmYtNTZkRS1TMzluTjB4QUFDOFBISEhfNU8wYnBkM08wUHRsRThmM2tPOTQ5d0JqOE85NEV0UVVQV3ZRVXJBbmoxbW1MVEhIVWtaS0ZTTHJuMk9hc0JtSVd1aVk5RGNzejg5aENGUkQ1UTdaZHc4SUUwM0d0VHJTLWVfYnFuT3hJZ1BaNGtyMHFXQ0txNXd3VkNNaHZ5RkhSYTFiTENSQktLTlRNdyIsCiAgInEiOiAidnFSWWYzUGJ1dlZhWHc4Wm5mclVpR2tvYWJQRldfclliU2hCeENDM1Eyd3FtSGU0UWoyZm5ldUFsaVFMWGhNaWdxSWpJUU9pVl9NclRwVlFaS1VJSXRIb1JRWHJrZkg3ODhUZkxGbHVCWWQxRUkzQnlQal9qdmwxb0ZvNVFfdDlfeTZ2T2Y4d1pJUG1RbWlTMVdfZGF0ZjBDRk1vWVFrRnhLYVZ0cHlyZ1Q1MXFLUnJHUEhxS0lxSXY3MVhHU1VDemFmNVJIUGhRVnNrTndRVDFSTV8xU3Zob0tsVVNjc0RpRmNNdUNhQ3JzN2xRNEdoMnpNcHFmZXJaa2ZfSmY5Z3FKU1E3YXd2bEVmWEZYVklYbmt0bkR2Z0FVT09QNm1ZVzdta25iR2NPVHJad1hweDBmR2xneEI5aVphdzJDNk5UWTlTMjNBM29yczA1cE1qa09ZMmlRIiwKICAiZHAiOiAicEJUWHROVXd4MDRkRU82VFZpSDNHUE5wM0loYVJOTmRuRTIwU3RRQ1E5U1lxQjJCWW5nQzJ2UUpFUjVuVGdfUFVBYTBvYW5wcWNDZlVlM09lY1ZJMzVPVzFLSFNiQTY4OWRCX2lidTNveEw3RTRDQWdkamNpTEhxZXBmVjZiVF9LYkt4eC1SUHFFNjFkRGx2NFo0NHpzYkNoN0pCUkFDZUZXdW1tekM0d3RXSi1ZaVNHQWtocVRxVFUxYl8zTVdKU2xja2NfZEJaQlhodXlPdU9LczUwek02dE1IR1BYMGdZOW0yaUV0dms1RXRadi1PbENZMTktblp0Q05MUlZ2bXhkZlFzVk0zZldmV21tRTRXaFJUakhqLXZldkpCbHZ1dGRjaGZwLUc3Y2hZUFJZMDJ2dUtlNElyTWx5ZDFYMzBkTmd0bHRzcGtxVFNOQTdjZFZSeXJ3IiwKICAiZHEiOiAibWlmR3JfajltdVlfRjFMY2doU0x1MnBkRld3YWtNXzhKZmhCaGRoMm1IeGt6VGt4czg2a3ZVdnJoSHpNX0ZzNHNxMXNfb3N6d1M2T3ZGS2MyV1ZoZU5hSG5SaTJiaU5nZXJPZFN2MWRxX2Jtd0dZQVp3U0JraGxCOWxJLXNDd3lyQ0FSN1RIZTdjaUNidnlranhhUDBvLWhjd0hiU3V2QzBFdHNFR2dMZnMwRTAwTnducEV2cVd5c08yOWRlS1dtNkttRk5NY0hSSlB3YXRSUFBTTDlvT0NFNkNkRVV3OW9ZZDBTR2U1NkNlU2ZHc0UtSWtQeTBzX0V0MFpNbVdzeHU5LTJlWm1jTjZrSDBRQXZic1ZLRG1XVU16RnZXeWRHWGhWMWVWWmZYeC1wYVh3YmdZcUhMYjR0NVE0SEhpZzJkcHNJZ3d6dzBCUFZLUVdkNHRObEVRIiwKICAicWkiOiAiZG0yeVM1ZWxFN3FJM0FVZ1hhanMzSy1JR25IbU5XYmJaSGpkcll6djRqX0p0NHlMZHZEeWFfMUdOVFZxN0N5ZHNVbnNwRTJYeWRzTnNINi1JQWxyQWNYdWZ5RUozRmJobTJlMGp1MDBJV3JoMmRBMmhXandYZTR6UFhwaVR1X0pabWpKSTRRa0R2WENDNGNtUHJXa3ZDS3ljeEtuMUM3VHNEd3VmSDQwbngwdE85cVN5czYyMV9NeUNIZE5Dak5DUlFuNmJxNUpkZTBjaEJic0c5WWFheDFQeDBzZXhvVGpSLVNILVo1RHZaU0xmb2dxSHNyRDY2YWZvaXdEdG9XVE5adGRteko1eFUtYnlmeEsyRGhIVDhsdHVYUjdtcDE3MVpMSUNyZ1gzMjlhVzVyV1JlNU9zMkZyYkpfWmV5bFVPUFZxRndjVTVlU1NzMmdqOHlxcVF3Igp9",
+            headers: {
+                authorization: access_token,
+            }
+        })
+    } catch {
+        await octokit.request('PATCH /repos/{owner}/{repo}/actions/variables/{name}', {
+            owner: user,
+            repo: repository,
+            name: "WALLET_JSON",
+            value: "ewogICJrdHkiOiAiUlNBIiwKICAiZSI6ICJBUUFCIiwKICAibiI6ICJzVXc2b08xbWZySkZpdUJzc0Ixb2xRUUVNODlRRW0wdzg1YmtDVzhFSExWVFBwSEJqcmlwOXFqZ05la3Z6TnJDVG1aQjZBWEFYS2prbi0zNGhsT3p5c3VieFdOR1EtZVlKd09sWHp3N1g1QTFGX1o1NThzQWk0WndMNVYyRndfOXN2Mmk2MEpsVl9yRmRXcmgtakNhZHZXSmI5NDBLZjF5dUwwZzBTVEtKeTl1dVNiZ09Ia0oyLVR1bGtBOEtyQ2ppMkprTFRCQWVmYUNxc2dNNlRfUmQ3OGJXTFlDQWNDTTNvYnFnLVpMRzRzTWhWSWJyUjBBYjJkaEtqOVVXbUNHc2c1b2RQNnpNWEg0ZmdEZExRVEJDLThJdk9FM3JDUlBmM0d6Nmg5TFJHaUszemJBMGhpc0hNSTE0UUY4VzBpQTBsa2NtVThPNWY4SmkweDRpUWZWdm1uby12UzRzaDVVUXdZZFQ2NDJRY0VFbE5sQTk0TEZlOGd1NWt3TjZLeWNlQkNvS3dvXzFIX2U4YzZOU2o0QlNxbjZGUE44Wm15dW1vci1VUXZseEZtbklsMXFnNm42RVRSdkJMV19xel9zNUpRSDdhR1RwVGFETnZvZHU4dWhIOW5vaXhCcy10VnI1SDVXTkR6NnlVX1BhWmNHRDZNanVJZzZrVDhBU1dyZmlOMFdSY1VBM2ItWDNLZ3Jac2VFMGI4Y09kUnZjaTVFMmJNVGJCOTc0R2syd2tMMk9JR2FIcUVHWGp6NlkwY0hCMm4zTVFob3V2aVA2dExuYXdObXBoaUNjaVR4bmZZRnFvRXZ0S1JMVnZvaGs4OWtpREdiMDIxRXlacTktaElnY1NRdTdyR3dfSWhVSFlYbjhHa1NYRWN6dWduTmJyUXd4cGd2ODZMR1NFcyIsCiAgImQiOiAiUzFuWGJQLVlXTzVSS2ZXNW01dlVEOGoyTkVLLWlDWko4S3pIVzg4SDAxLW84bVdsLW84M0JQSy0zNHFzV3diNkg3SExfdDA2NU9hT3lfMnFhd1IxM0JGdXNaUkFqNm1FLThmTDU4N0VlUmZqeUx4akVRVXd4UnVzNER4SVJRTHgwcm1ESFROSnVQdUdJaUg3eW9ZUGo5Rkl5UGVKLWZLU2FEdFJFREh2akhuWE4tOXl5ZTFfS0NxQ3otNmE0NVhRMl9ORUdnUncwcVRXNGRoRnpIZm9BVm1DT05DWng3N2EzOVE5SlRPaDVpSFJmM1BtLVVyakhYVzFVT3c3WUhHM3JVTDhXQVRMaVk4amlnRzVfbUVQM28tSGlpYTVyM3A3SXZIakFmU3MyM1VHMkZqXzJBck9VeWFqR1c2MU9HSjNCVzhEX1pBaEI5UzliS3RpYXZLZWZ5bDBpMmZvM2J2RjZEVlZMQXdPSlJkVGlORTJzVXFoV25YSTgzaS1LSHBPMGY2MFBwRm82TlBzV2hnSmtidE9SVUM3dlR4R0VtVmdicmtUekFwSExWUnVkUk1JQ0xqakJWSXFtUVpHQThrMnBJc1VGZ0ROZ0NnUVJhU1IxcUs2c1lQWFpiUWlqbkhTN2xvODVpcEo5MFdhX0hUMXFsZ2FCOWVRNkZaVGxfakphN29SRmpCOHhnbF9DTHg2bmJTRjVuRlo4LXRqb3ZUZkFVNk1IUjR6TTEtT2tGbGw5NmhDY29yOU9WXy0xQTRlMmdRRDJNYTVhWlAzWmNIazhidVllUWR0VFE0enRQNWdid25PQ1JHUm15enFzOEk5aHZwVFJ4X1FXeHB3enZGMVJJUEpYZzNULWhuN3oyeGZpcklMSHp5OTFSR3lTbmEwTDVfSUhneTRXVkUiLAogICJwIjogIjdoUzdWLXRQWkhmQXBwQ2NkYUJ2ZzdyQk40U1I2NERDVm1pQjNXcWM1WXFxdFY5TldWeVVvTUc2Tm10MEhyYjZQQl9zMG5OV1I2U3ZnNUFlYkRLdmhBTTdwT01qdkRKRXI2cWF1OWItdzJMRFlwRTR5Y2lNUVJTek1xSDZsRFZPTVNhY3RVcmpCaFZzVXR1VnFtcDlkVHkwVjZienZleHBrZGFMbzFhTnRJZE92LVRjTmYtNTZkRS1TMzluTjB4QUFDOFBISEhfNU8wYnBkM08wUHRsRThmM2tPOTQ5d0JqOE85NEV0UVVQV3ZRVXJBbmoxbW1MVEhIVWtaS0ZTTHJuMk9hc0JtSVd1aVk5RGNzejg5aENGUkQ1UTdaZHc4SUUwM0d0VHJTLWVfYnFuT3hJZ1BaNGtyMHFXQ0txNXd3VkNNaHZ5RkhSYTFiTENSQktLTlRNdyIsCiAgInEiOiAidnFSWWYzUGJ1dlZhWHc4Wm5mclVpR2tvYWJQRldfclliU2hCeENDM1Eyd3FtSGU0UWoyZm5ldUFsaVFMWGhNaWdxSWpJUU9pVl9NclRwVlFaS1VJSXRIb1JRWHJrZkg3ODhUZkxGbHVCWWQxRUkzQnlQal9qdmwxb0ZvNVFfdDlfeTZ2T2Y4d1pJUG1RbWlTMVdfZGF0ZjBDRk1vWVFrRnhLYVZ0cHlyZ1Q1MXFLUnJHUEhxS0lxSXY3MVhHU1VDemFmNVJIUGhRVnNrTndRVDFSTV8xU3Zob0tsVVNjc0RpRmNNdUNhQ3JzN2xRNEdoMnpNcHFmZXJaa2ZfSmY5Z3FKU1E3YXd2bEVmWEZYVklYbmt0bkR2Z0FVT09QNm1ZVzdta25iR2NPVHJad1hweDBmR2xneEI5aVphdzJDNk5UWTlTMjNBM29yczA1cE1qa09ZMmlRIiwKICAiZHAiOiAicEJUWHROVXd4MDRkRU82VFZpSDNHUE5wM0loYVJOTmRuRTIwU3RRQ1E5U1lxQjJCWW5nQzJ2UUpFUjVuVGdfUFVBYTBvYW5wcWNDZlVlM09lY1ZJMzVPVzFLSFNiQTY4OWRCX2lidTNveEw3RTRDQWdkamNpTEhxZXBmVjZiVF9LYkt4eC1SUHFFNjFkRGx2NFo0NHpzYkNoN0pCUkFDZUZXdW1tekM0d3RXSi1ZaVNHQWtocVRxVFUxYl8zTVdKU2xja2NfZEJaQlhodXlPdU9LczUwek02dE1IR1BYMGdZOW0yaUV0dms1RXRadi1PbENZMTktblp0Q05MUlZ2bXhkZlFzVk0zZldmV21tRTRXaFJUakhqLXZldkpCbHZ1dGRjaGZwLUc3Y2hZUFJZMDJ2dUtlNElyTWx5ZDFYMzBkTmd0bHRzcGtxVFNOQTdjZFZSeXJ3IiwKICAiZHEiOiAibWlmR3JfajltdVlfRjFMY2doU0x1MnBkRld3YWtNXzhKZmhCaGRoMm1IeGt6VGt4czg2a3ZVdnJoSHpNX0ZzNHNxMXNfb3N6d1M2T3ZGS2MyV1ZoZU5hSG5SaTJiaU5nZXJPZFN2MWRxX2Jtd0dZQVp3U0JraGxCOWxJLXNDd3lyQ0FSN1RIZTdjaUNidnlranhhUDBvLWhjd0hiU3V2QzBFdHNFR2dMZnMwRTAwTnducEV2cVd5c08yOWRlS1dtNkttRk5NY0hSSlB3YXRSUFBTTDlvT0NFNkNkRVV3OW9ZZDBTR2U1NkNlU2ZHc0UtSWtQeTBzX0V0MFpNbVdzeHU5LTJlWm1jTjZrSDBRQXZic1ZLRG1XVU16RnZXeWRHWGhWMWVWWmZYeC1wYVh3YmdZcUhMYjR0NVE0SEhpZzJkcHNJZ3d6dzBCUFZLUVdkNHRObEVRIiwKICAicWkiOiAiZG0yeVM1ZWxFN3FJM0FVZ1hhanMzSy1JR25IbU5XYmJaSGpkcll6djRqX0p0NHlMZHZEeWFfMUdOVFZxN0N5ZHNVbnNwRTJYeWRzTnNINi1JQWxyQWNYdWZ5RUozRmJobTJlMGp1MDBJV3JoMmRBMmhXandYZTR6UFhwaVR1X0pabWpKSTRRa0R2WENDNGNtUHJXa3ZDS3ljeEtuMUM3VHNEd3VmSDQwbngwdE85cVN5czYyMV9NeUNIZE5Dak5DUlFuNmJxNUpkZTBjaEJic0c5WWFheDFQeDBzZXhvVGpSLVNILVo1RHZaU0xmb2dxSHNyRDY2YWZvaXdEdG9XVE5adGRteko1eFUtYnlmeEsyRGhIVDhsdHVYUjdtcDE3MVpMSUNyZ1gzMjlhVzVyV1JlNU9zMkZyYkpfWmV5bFVPUFZxRndjVTVlU1NzMmdqOHlxcVF3Igp9",
+            headers: {
+                authorization: access_token,
+            }
+        })
+    }
+    console.log("Added WALLET_JSON");
+}
+
+async function getLinkToArdrive(user, repository, access_token) {
+    const repoData = await octokit.request('GET /repos/{owner}/{repo}', {
+        owner: user,
+        repo: repository,
+        headers: {
+            authorization: access_token,
+        }
+    })
+    console.log("This is the description : ", repoData["data"]["description"]);
+    return repoData["data"]["description"];
+}
+
 async function addRepoTopic(user, repository) {
     await octokit.request('PUT /repos/{owner}/{repo}/topics', {
         owner: user,
@@ -66,6 +169,7 @@ async function getRepositories(user, access_token, filter = "all") {
                 var repoJSON = {
                     "name": result["data"][i]["name"],
                     "commit_msg": await getLatestCommit(user, result["data"][i]["name"], access_token),
+                    "url": await getLinkToArdrive(user, result["data"][i]["name"], access_token),
                     "updated_at": result["data"][i]["updated_at"],
                 }
                 // console.log(tags);
@@ -117,7 +221,7 @@ async function createOrUpdateWorkflow(user, access_token, repository, filePath, 
             headers: {
                 authorization: access_token,
             },
-            content: 'bmFtZTogQXJkcml2ZSBXb3JrZmxvdwpvbjogW3B1c2hdCmVudjoKICAjIFNldHRpbmcgYW4gZW52aXJvbm1lbnQgdmFyaWFibGUgd2l0aCB0aGUgdmFsdWUgb2YgYSBjb25maWd1cmF0aW9uIHZhcmlhYmxlCiAgZW52X3ZhcjogJHt7IHZhcnMuRU5WX0NPTlRFWFRfVkFSIH19CmpvYnM6CiAgYnVpbGQ6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHYzCiAgICAgIC0gdXNlczogYWN0aW9ucy9zZXR1cC1ub2RlQHYzCiAgICAgICAgd2l0aDoKICAgICAgICAgIG5vZGUtdmVyc2lvbjogJzE4JwogICAgICAtIG5hbWU6IEluc3RhbGwgRGVwZW5kZW5jaWVzCiAgICAgICAgcnVuOiB8CiAgICAgICAgIG5wbSBpbnN0YWxsIC1nIGFyZHJpdmUtY2xpCiAgICAgIC0gbmFtZTogQnVpbGQgdGhlIHN0YXRpYyB3ZWJzaXRlCiAgICAgICAgcnVuOiB8CiAgICAgICAgIG5wbSBpbnN0YWxsCiAgICAgICAgIG5wbSBydW4gYnVpbGQKICAgICAgICAgbHMKICAgICAgLSBuYW1lOiBVcGxvYWQgdG8gQXJkcml2ZQogICAgICAgIHJ1bjogfAogICAgICAgICBlY2hvICJVcGxvYWRpbmcgdG8gQXJkcml2ZS4uLi4hIgogICAgICAgICBlY2hvICJyZXBvc2l0b3J5IHZhcmlhYmxlICAke3sgdmFycy5SRVBPU0lUT1JZX1ZBUiB9fSIKICAgICAgICAjICBhcmRyaXZlIC0taGVscAogICAgICAtIG5hbWU6IENyZWF0aW5nIGEgTWFuaWZlc3QKICAgICAgICBydW46IHwKICAgICAgICAgIGVjaG8gIkNyZWF0aW5nIGEgbWFuaWZlc3QuLi4uISIKICAgICAgICAgIGVjaG8gIk1hbmlmZXN0IGNyZWF0ZWQgU3VjY2Vzc2Z1bGx5ISIK',
+            content: 'bmFtZTogQXJkcml2ZSBXb3JrZmxvdwpvbjogW3B1c2hdCmVudjoKICAjIFNldHRpbmcgYW4gZW52aXJvbm1lbnQgdmFyaWFibGUgd2l0aCB0aGUgdmFsdWUgb2YgYSBjb25maWd1cmF0aW9uIHZhcmlhYmxlCiAgZW52X3ZhcjogJHt7IHZhcnMuRU5WX0NPTlRFWFRfVkFSIH19CiAgCmpvYnM6CiAgYnVpbGQ6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHYzCiAgICAgIC0gbmFtZTogU2V0IHVwIE5vZGUKICAgICAgICB1c2VzOiBhY3Rpb25zL3NldHVwLW5vZGVAdjMKICAgICAgICB3aXRoOgogICAgICAgICAgbm9kZS12ZXJzaW9uOiAnMTgnCiAgICAgICAgICAKICAgICAgLSBuYW1lOiBTZXQgdXAgUHl0aG9uCiAgICAgICAgdXNlczogYWN0aW9ucy9zZXR1cC1weXRob25AdjIKICAgICAgICB3aXRoOgogICAgICAgICAgcHl0aG9uLXZlcnNpb246ICczLjEwJwoKICAgICAgIyAtIG5hbWU6IEluc3RhbGwgRGVwZW5kZW5jaWVzCiAgICAgICMgICBydW46IHwKICAgICAgIyAgICBucG0gaW5zdGFsbCAtZyBhcmRyaXZlLWNsaSAtLXNpbGVudAogICAgICAjICAgIGVjaG8gIlN1Y2Nlc3NmdWxseSBJbnN0YWxsZWQgYXJkcml2ZS1jbGkiCgogICAgICAjIC0gbmFtZTogQnVpbGQgdGhlIHdlYnNpdGUKICAgICAgIyAgIHJ1bjogfAogICAgICAjICAgIG5wbSBpbnN0YWxsIC0tc2lsZW50CiAgICAgICMgcHl0aG9uIGFyc3luY19zY3JpcHQucHkgLXcgd2FsbGV0Lmpzb24gLWQgJHt7IHZhcnMuRFJJVkVfSUR9fSAtYiAke3sgdmFycy5CVUlMRF9FWFBPUlRfTkFNRX19ID4+IGxvZy50eHQKICAgICAgIyAgICBucG0gcnVuIGJ1aWxkIC0tc2lsZW50CgogICAgICAtIG5hbWU6IFVwbG9hZGluZyB0byBhcmRyaXZlCiAgICAgICAgcnVuOiB8CiAgICAgICAgICBlY2hvICR7eyB2YXJzLldBTExFVF9KU09OfX0gfCBiYXNlNjQgLWQgPiB3YWxsZXQuanNvbgogICAgICAgICAgZWNobyAibGlua3RvLndlYnNpdGUiID4+IGxvZy50eHQKICAgICAgICAgIGdoIGF1dGggbG9naW4gLS13aXRoLXRva2VuIDw8PCAke3sgdmFycy5HX1RPS0VOIH19CiAgICAgICAgICBnaCByZXBvIGVkaXQgJHt7IGdpdGh1Yi5yZXBvc2l0b3J5IH19IC0tZGVzY3JpcHRpb24gIiQoY2F0IGxvZy50eHQpIgogICAgICAgICAgZWNobyAiUGxlYXNlIG5hdmlnYXRlIHRvIHRoZSBsaW5rIGZyb20gZGVzY3JpcHRpb24gdG8gYWNjZXNzIHlvdSBkZWNlbnRyYWxpemVkIHdlYnNpdGUhIg==',
             sha: existingFile.sha,
         }).then((err) => {
             console.log(err);
@@ -139,7 +243,7 @@ async function createOrUpdateWorkflow(user, access_token, repository, filePath, 
                     name: 'Team Last Minute',
                     email: 'lastmin@gmail.com'
                 },
-                content: 'bmFtZTogQXJkcml2ZSBXb3JrZmxvdwpvbjogW3B1c2hdCmVudjoKICAjIFNldHRpbmcgYW4gZW52aXJvbm1lbnQgdmFyaWFibGUgd2l0aCB0aGUgdmFsdWUgb2YgYSBjb25maWd1cmF0aW9uIHZhcmlhYmxlCiAgZW52X3ZhcjogJHt7IHZhcnMuRU5WX0NPTlRFWFRfVkFSIH19CmpvYnM6CiAgYnVpbGQ6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHYzCiAgICAgIC0gdXNlczogYWN0aW9ucy9zZXR1cC1ub2RlQHYzCiAgICAgICAgd2l0aDoKICAgICAgICAgIG5vZGUtdmVyc2lvbjogJzE4JwogICAgICAtIG5hbWU6IEluc3RhbGwgRGVwZW5kZW5jaWVzCiAgICAgICAgcnVuOiB8CiAgICAgICAgIG5wbSBpbnN0YWxsIC1nIGFyZHJpdmUtY2xpCiAgICAgIC0gbmFtZTogQnVpbGQgdGhlIHN0YXRpYyB3ZWJzaXRlCiAgICAgICAgcnVuOiB8CiAgICAgICAgIG5wbSBpbnN0YWxsCiAgICAgICAgIG5wbSBydW4gYnVpbGQKICAgICAgICAgbHMKICAgICAgLSBuYW1lOiBVcGxvYWQgdG8gQXJkcml2ZQogICAgICAgIHJ1bjogfAogICAgICAgICBlY2hvICJVcGxvYWRpbmcgdG8gQXJkcml2ZS4uLi4hIgogICAgICAgICBlY2hvICJyZXBvc2l0b3J5IHZhcmlhYmxlICAke3sgdmFycy5SRVBPU0lUT1JZX1ZBUiB9fSIKICAgICAgICAjICBhcmRyaXZlIC0taGVscAogICAgICAtIG5hbWU6IENyZWF0aW5nIGEgTWFuaWZlc3QKICAgICAgICBydW46IHwKICAgICAgICAgIGVjaG8gIkNyZWF0aW5nIGEgbWFuaWZlc3QuLi4uISIKICAgICAgICAgIGVjaG8gIk1hbmlmZXN0IGNyZWF0ZWQgU3VjY2Vzc2Z1bGx5ISIK'
+                content: 'bmFtZTogQXJkcml2ZSBXb3JrZmxvdwpvbjogW3B1c2hdCmVudjoKICAjIFNldHRpbmcgYW4gZW52aXJvbm1lbnQgdmFyaWFibGUgd2l0aCB0aGUgdmFsdWUgb2YgYSBjb25maWd1cmF0aW9uIHZhcmlhYmxlCiAgZW52X3ZhcjogJHt7IHZhcnMuRU5WX0NPTlRFWFRfVkFSIH19CiAgCmpvYnM6CiAgYnVpbGQ6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdGVwczoKICAgICAgLSB1c2VzOiBhY3Rpb25zL2NoZWNrb3V0QHYzCiAgICAgIC0gbmFtZTogU2V0IHVwIE5vZGUKICAgICAgICB1c2VzOiBhY3Rpb25zL3NldHVwLW5vZGVAdjMKICAgICAgICB3aXRoOgogICAgICAgICAgbm9kZS12ZXJzaW9uOiAnMTgnCiAgICAgICAgICAKICAgICAgLSBuYW1lOiBTZXQgdXAgUHl0aG9uCiAgICAgICAgdXNlczogYWN0aW9ucy9zZXR1cC1weXRob25AdjIKICAgICAgICB3aXRoOgogICAgICAgICAgcHl0aG9uLXZlcnNpb246ICczLjEwJwoKICAgICAgIyAtIG5hbWU6IEluc3RhbGwgRGVwZW5kZW5jaWVzCiAgICAgICMgICBydW46IHwKICAgICAgIyAgICBucG0gaW5zdGFsbCAtZyBhcmRyaXZlLWNsaSAtLXNpbGVudAogICAgICAjICAgIGVjaG8gIlN1Y2Nlc3NmdWxseSBJbnN0YWxsZWQgYXJkcml2ZS1jbGkiCgogICAgICAjIC0gbmFtZTogQnVpbGQgdGhlIHdlYnNpdGUKICAgICAgIyAgIHJ1bjogfAogICAgICAjICAgIG5wbSBpbnN0YWxsIC0tc2lsZW50CiAgICAgICMgcHl0aG9uIGFyc3luY19zY3JpcHQucHkgLXcgd2FsbGV0Lmpzb24gLWQgJHt7IHZhcnMuRFJJVkVfSUR9fSAtYiAke3sgdmFycy5CVUlMRF9FWFBPUlRfTkFNRX19ID4+IGxvZy50eHQKICAgICAgIyAgICBucG0gcnVuIGJ1aWxkIC0tc2lsZW50CgogICAgICAtIG5hbWU6IFVwbG9hZGluZyB0byBhcmRyaXZlCiAgICAgICAgcnVuOiB8CiAgICAgICAgICBlY2hvICR7eyB2YXJzLldBTExFVF9KU09OfX0gfCBiYXNlNjQgLWQgPiB3YWxsZXQuanNvbgogICAgICAgICAgZWNobyAibGlua3RvLndlYnNpdGUiID4+IGxvZy50eHQKICAgICAgICAgIGdoIGF1dGggbG9naW4gLS13aXRoLXRva2VuIDw8PCAke3sgdmFycy5HX1RPS0VOIH19CiAgICAgICAgICBnaCByZXBvIGVkaXQgJHt7IGdpdGh1Yi5yZXBvc2l0b3J5IH19IC0tZGVzY3JpcHRpb24gIiQoY2F0IGxvZy50eHQpIgogICAgICAgICAgZWNobyAiUGxlYXNlIG5hdmlnYXRlIHRvIHRoZSBsaW5rIGZyb20gZGVzY3JpcHRpb24gdG8gYWNjZXNzIHlvdSBkZWNlbnRyYWxpemVkIHdlYnNpdGUhIg=='
                 , headers: {
                     authorization: access_token,
                 }
@@ -160,7 +264,7 @@ async function createOrUpdateWorkflow(user, access_token, repository, filePath, 
             owner: user,
             repo: repository,
             path: scriptFilePath,
-            message: 'Added workflow by arsync',
+            message: '[skip ci] Updated upload script by arsync',
             committer: {
                 name: 'Team Last Minute',
                 email: 'lastmin@gmail.com'
@@ -184,7 +288,7 @@ async function createOrUpdateWorkflow(user, access_token, repository, filePath, 
                 owner: user,
                 repo: repository,
                 path: scriptFilePath,
-                message: 'Added workflow by arsync',
+                message: '[skip ci] Created upload script by arsync',
                 committer: {
                     name: 'Team Last Minute',
                     email: 'lastmin@gmail.com'
@@ -201,11 +305,12 @@ async function createOrUpdateWorkflow(user, access_token, repository, filePath, 
             console.log("my name is khan but you can call me error :)", err);
         }
     }
-
-
+    console.log("Before adding rep vars!");
+    addRepoVariables(user, repository, access_token);
+    console.log("After adding rep vars!");
     addRepoTopic(user, repository);
-
 }
+
 
 function send_mail() {
     const { to, subject, text } = {
@@ -322,6 +427,15 @@ app.post('/email', (req, res) => {
     send_mail();
     res.send("Email sent successfully");
 });
+
+// app.get('/desc', async (req, res) => {
+//     const user = req.get("username");
+//     const repository = req.get("repository");
+//     const access_token = req.get("access_token");
+//     const link = await getLinkToArdrive(user, repository, access_token);
+//     res.send(link);
+// });
+
 
 app.listen(3000, function () {
     console.log('Github login app listening on port 3000!');
