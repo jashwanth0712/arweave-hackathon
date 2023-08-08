@@ -13,7 +13,7 @@ jobs:
           node-version: '18'
       - name: Install Dependencies
         run: |
-         npm install -g ardrive-cli
+         echo "Installing Dependencies....!"
       - name: Build the static website
         run: |
          cd static-website

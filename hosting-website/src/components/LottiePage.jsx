@@ -19,7 +19,7 @@ const UncontrolledLottie = () => {
 
     // Set a timer to redirect after 3 seconds
     const redirectTimer = setTimeout(() => {
-      navigate('/addNew',{replace:true})
+      navigate(-1)
     }, 3000);
 
     // Clear the timer when the component unmounts

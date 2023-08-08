@@ -10,9 +10,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AddNewProject from './pages/AddNew';
 import StartingPage from './pages/StartingPage';
 import Callback from './components/callback';
+import Details from './pages/details/details'
 import ProtectedRoute from './utils/ProtectedRoutes'
 import Login from './pages/Login'
 import ProtectedRoutes from './utils/ProtectedRoutes'
+import DeployForm from './pages/deployform/deployform'
+import Success from './pages/Success'
 
 function App() {
 
@@ -23,12 +26,15 @@ function App() {
         <Routes>
           <Route element={<ProtectedRoutes />}>
           </Route>
+          <Route path='/' element={<StartingPage />} />
+          <Route path='/login' element={<Login />} />
           <Route path='/dashboard' element={<HomePage />} />
           <Route path='/addNew' element={<AddNewProject />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/' element={<StartingPage />} />
+          <Route path='/import' element={<DeployForm />} />
+          <Route path='/success' element={<Success />} />
           <Route path='/callback' element={<Callback />} />
           <Route path='/license' element={<LicensePage />} />
+          <Route path='/details' element={<Details />} />
         </Routes>
       </main>
     </Router>
