@@ -32,9 +32,6 @@ function StartingPage() {
         <PopupModal/>
       </div>
 
-      <p className='spacingLetters'>TRUSTED BY THE BEST FRONTEND TEAMS</p>
-
-
       <div className='flex align-top gap-5 w-fit mx-auto mt-20'>
         <div className='mx-auto relative'>
           <div className="h-10 w-10 bg-[#603EAA] rounded-full grid place-content-center font-bold text-base text-[white]">1</div>
