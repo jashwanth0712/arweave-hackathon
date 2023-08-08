@@ -9,7 +9,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AddNewProject from './pages/AddNew';
 import StartingPage from './pages/StartingPage';
-import Callback from './components/callback';
+import Callback from './components/Callback';
 import Details from './pages/details/details'
 import ProtectedRoute from './utils/ProtectedRoutes'
 import Login from './pages/Login'
