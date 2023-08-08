@@ -20,7 +20,9 @@ function StartingPage() {
     <div className="App">
       <div className='arsync'><img className='image' src={image} alt='Asset-2'/>
       <h3 className='heading'>arsync</h3></div>
-      <p className='vercel'>ARSync gives you the best user experience and fast deployment of websites with a single click.</p>
+
+      <p className='vercel'>arsync gives you the best user experience and fast deployment of websites with a single click.</p>
+
       <div className='Buttons'>
         <Link to='/dashboard'>
           <button className='StartDeploying'>
@@ -31,9 +33,6 @@ function StartingPage() {
         {/* <button className='GetDemo'>Get Demo</button> */}
         <PopupModal/>
       </div>
-
-      <p className='spacingLetters'>TRUSTED BY THE BEST FRONTEND TEAMS</p>
-
 
       <div className='flex align-top gap-5 w-fit mx-auto mt-20'>
         <div className='mx-auto relative'>
@@ -68,7 +67,7 @@ function StartingPage() {
       </div>
 
       <div className='flex mt-[10rem]'>
-        <div className='w-[650px] text-left text-[19px]'>Welcome to arsync, your ultimate solution for effortless Continuous Integration and Continuous Deployment CI/CD of ardrive hosted websites🤯. We understand the challenges that developers face when it comes to maintaining seamless updates and deployments for their ardrive-hosted projects 🫂. With ARSync, we've revolutionized the process🤩, making it easier than ever to keep your websites up-to-date and running smoothly.😉</div>
+        <div className='w-[650px] text-left text-[19px]'>Welcome to arsync, your ultimate solution for effortless Continuous Integration and Continuous Deployment CI/CD of ardrive hosted websites. We understand the challenges that developers face when it comes to maintaining seamless updates and deployments for their ardrive-hosted projects . With ARSync, we've revolutionized the process, making it easier than ever to keep your websites up-to-date and running smoothly.</div>
         <div className=''>
           <Lottie options={defaultOptions} height={400} width={500} />
         </div>
