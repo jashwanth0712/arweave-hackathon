@@ -24,8 +24,6 @@ function App() {
       <main className='max-w-5xl mx-auto'>
         <Navbar />
         <Routes>
-          <Route element={<ProtectedRoutes />}>
-          </Route>
           <Route path='/' element={<StartingPage />} />
           <Route path='/login' element={<Login />} />
           <Route path='/dashboard' element={<HomePage />} />
