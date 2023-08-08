@@ -100,3 +100,17 @@ Arsync is the managing layer that interacts with all the components to create a 
 - it manages Environment variables
 - securely connects ardrive and github
 - there is no virtual server used , hence its completely decentralized ignoring the web2 github
+- managing of the licenses are also done here
+
+### python script
+- manages the build files in github actions
+- pushes the build file to ardrive
+- creates license
+- creates manifests and uploads the hosted link into the github about section🚀
+
+
+
+# What's next ?
+- We are trying to add support for environment variables.
+- We can add testing/checking the builds for vulnerabilities and security issues before deploying them directly in arweave.
+- We would like to support for more range of frameworks like VueJS, AngularJS etc. and even provide support for database.
