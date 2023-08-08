@@ -4,7 +4,7 @@ export default function LoginButton() {
 
     const handleGitHubLogin = () => {
         const clientId = import.meta.env.VITE_GITHUB_CLIENT_ID;
-        window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=admin:org,repo,user,workflow`;
+        window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=admin:org,repo,user,workflow,actions_variables:write`;
     };
 
     return (
@@ -12,4 +12,4 @@ export default function LoginButton() {
     );
 }
 
-{/* <button className="px-4 py-2 text-sm hover:bg-[var(--primary-light)]">Log In</button> */}
+{/* <button className="px-4 py-2 text-sm hover:bg-[var(--primary-light)]">Log In</button> */ }
