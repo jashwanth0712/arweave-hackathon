@@ -38,7 +38,7 @@ export default function PopupModal() {
     if (showModal) {
       closeTimeout = setTimeout(() => {
         setShowModal(false);
-      }, 12000);
+      }, 9000);
     } else {
       clearTimeout(closeTimeout);
     }
