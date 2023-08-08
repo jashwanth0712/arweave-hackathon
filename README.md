@@ -90,7 +90,7 @@ You now got the link for your website.
 The highlevel working of arsync application  is described in the below flowchart.
 
 ![](https://raw.githubusercontent.com/malviyaHimanshu/arweave-hackathon/main/images/chart.jpeg))
-when ever the code is pushed following functions are executed
+### when ever the code is pushed following functions are executed
 - a new workflow is inserted into the users github
 - python script is injected into his github
 - workflow runs the python script which then connects with ardrive and pushes it
