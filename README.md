@@ -53,15 +53,22 @@ To access the appliction go to
 
 Authenticate using your GitHub account where your project is located.
 
+![home](https://raw.githubusercontent.com/jashwanth0712/arweave-hackathon/main/images/Github_login.jpg)
+
 ### AddNew
 You now have visibility into the projects you've deployed, along with an "Add New" button located in the upper-right corner.
 
 To initiate the deployment process for a desired project, simply click on the "Add New" button and make your selection.
 
+![home](https://raw.githubusercontent.com/jashwanth0712/arweave-hackathon/main/images/Add New.PNG)
+
 ### Import
 You now have the ability to view all of your GitHub repositories within the platform.
 
 Next, proceed to import the specific repository that you intend to deploy.
+
+![home](https://raw.githubusercontent.com/jashwanth0712/arweave-hackathon/main/images/Import.PNG)
+![home](https://raw.githubusercontent.com/jashwanth0712/arweave-hackathon/main/images/Deploy.PNG)
 
 ### ardrive login
 
