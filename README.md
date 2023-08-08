@@ -67,8 +67,8 @@ You now have the ability to view all of your GitHub repositories within the plat
 
 Next, proceed to import the specific repository that you intend to deploy.
 
-![home](https://github.com/malviyaHimanshu/arweave-hackathon/blob/main/images/Github_login.jpg)
-![home](https://github.com/malviyaHimanshu/arweave-hackathon/blob/main/images/Github_login.jpg)
+![home](https://github.com/malviyaHimanshu/arweave-hackathon/blob/main/images/Import.jpg)
+![home](https://github.com/malviyaHimanshu/arweave-hackathon/blob/main/images/Deploy.jpg)
 
 ### ardrive login
 
