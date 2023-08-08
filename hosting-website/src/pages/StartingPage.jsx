@@ -3,7 +3,7 @@ import '../styles/StartingPage.css';
 import { Link } from "react-router-dom";
 import Lottie from "react-lottie";
 import animation from '../assets/lottie/animation_ll15mgrx.json'
-
+import PopupModal from '../components/PopupModal';
 
 function StartingPage() {
 
@@ -29,9 +29,9 @@ function StartingPage() {
             <p>Start Deploying</p>
           </button>
         </Link>
-        <Link to='/lottie'>
-          <button className='GetDemo'>Get Demo</button>
-        </Link>
+
+        {/* <button className='GetDemo'>Get Demo</button> */}
+        <PopupModal/>
       </div>
 
       <p className='spacingLetters'>TRUSTED BY THE BEST FRONTEND TEAMS</p>
