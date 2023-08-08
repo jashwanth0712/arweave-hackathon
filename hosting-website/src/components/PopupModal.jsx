@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import step_1 from '../assets/images/Step 1.gif' 
 
 const imageLinks = [
-  "https://imgs.search.brave.com/gZSPHKpSrfrpTkAUsGXiZo-i3WLr8IKrDmL4Ia2KHOw/rs:fit:500:0:0/g:ce/aHR0cHM6Ly93d3cu/ZGlnaXRhbG9jZWFu/LmNvbS9fbmV4dC9z/dGF0aWMvbWVkaWEv/aW50cm8tdG8tY2xv/dWQuZDQ5YmM1Zjcu/anBlZw",
-  "https://imgs.search.brave.com/_RtpHldsu_U1uPCUT-8j93uhPyK3zl0Gf1aDnFzYjdA/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9taXJv/Lm1lZGl1bS5jb20v/djIvMSo3SWFDTnVl/WjRxcjRHTXFVdGNW/WVdRLnBuZw",
+    step_1,
+    "https://imgs.search.brave.com/_RtpHldsu_U1uPCUT-8j93uhPyK3zl0Gf1aDnFzYjdA/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9taXJv/Lm1lZGl1bS5jb20v/djIvMSo3SWFDTnVl/WjRxcjRHTXFVdGNW/WVdRLnBuZw",
 
   // Add more image links as needed
 ];
@@ -17,7 +18,7 @@ export default function PopupModal() {
     if (showModal) {
       imageInterval = setInterval(() => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageLinks.length);
-      }, 2000);
+      }, 5000);
     } else {
       clearInterval(imageInterval);
     }
@@ -33,7 +34,7 @@ export default function PopupModal() {
     if (showModal) {
       closeTimeout = setTimeout(() => {
         setShowModal(false);
-      }, 6000);
+      }, 15000);
     } else {
       clearTimeout(closeTimeout);
     }
