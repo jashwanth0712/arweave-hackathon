@@ -89,7 +89,7 @@ You now got the link for your website.
 
 The highlevel working of arsync application  is described in the below flowchart.
 
-![](./flowchart.jpeg)
+![](https://raw.githubusercontent.com/malviyaHimanshu/arweave-hackathon/main/images/chart.jpeg))
 
 Initially the Codebase of the static website will be built in collaboration by various developers using GitHub. When this codebase  is ready to deploy into the arweave decentralized network, user logs in to the arsync web application using the github account.
 
