@@ -90,13 +90,13 @@ You now got the link for your website.
 The highlevel working of arsync application  is described in the below flowchart.
 
 ![](https://raw.githubusercontent.com/malviyaHimanshu/arweave-hackathon/main/images/chart.jpeg))
+when ever the code is pushed following functions are executed
+- a new workflow is inserted into the users github
+- python script is injected into his github
+- workflow runs the python script which then connects with ardrive and pushes it
 
-Initially the Codebase of the static website will be built in collaboration by various developers using GitHub. When this codebase  is ready to deploy into the arweave decentralized network, user logs in to the arsync web application using the github account.
-
-When the user logins, they will be redirected to a dashboard where they can see their current arsync deployments. The dashboard will search the user repositories tagged with the topic "arsync" which will be added to the repositories that are deployed using arsync previously. If the user is a new user, the dashboard will be empty. If the user has deployed websites previously they will see cards of deployed website, which can be clicked on to view the arweave domain they are deployed to.
-
-If a user clicks on the "Add New" button on the dashboard, arsync fetches all the repositories that the user has access to using the GitHub REST API and displays them on the add new page. When the user clicks on the import button, they will be redirected a form page where they can enter the details like build command, etc. The form data and the wallet file the user uploads will be set as repository environment variables, to protect the sensitive information like wallet and the drive IDs, which will be used during the build and deploy stages of the website in github actions.
-
-Once the appropriate form data are submitted and the deploy button is clicked, arsync backend receives the data, analyses the response, determines the type of workflow that should be added and finally adds the workflow to the github user's account. This workflow will automate the process of installing the dependencies, building the website, uploading the files to ardrive and finally create a manifest which will assign the manifest a domain. This domain will be reflected back in the arsync webapp's dashboard and also the description of the github repository.
-
-
+### Arsync
+Arsync is the managing layer that interacts with all the components to create a seamless workflow experience
+- it manages Environment variables
+- securely connects ardrive and github
+- there is no virtual server used , hence its completely decentralized ignoring the web2 github
