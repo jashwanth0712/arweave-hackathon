@@ -20,9 +20,9 @@ function StartingPage() {
     <div className="App">
       <div className='arsync'><img className='image' src={image} alt='Asset-2'/>
       <h3 className='heading'>arsync</h3></div>
-      <p className='vercel'>Vercel's frontend cloud gives developers the frameworks, 
-        workflows, and infrastructure to build a faster, 
-        more personalized Web</p>
+      <p className='vercel'>No more deployment headaches! 
+      arsync's streamlined CI/CD pipeline makes updating your
+      ARDrive hosted websites a walk in the park.</p>
       <div className='Buttons'>
         <Link to='/dashboard'>
           <button className='StartDeploying'>
