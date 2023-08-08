@@ -3,10 +3,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 
+
+
+
 export default function AddNewProject() {
     const [isLoading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const navigate = useNavigate();
+    const [seedPhrase, setseedPhrase] = useState('');
 
     useEffect(() => {
         setLoading(true);
@@ -44,6 +48,22 @@ export default function AddNewProject() {
             }
         })
     }
+    const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const handleUpload = () => {
+    if (selectedFile) {
+      // Perform your upload logic here
+      console.log('Uploading:', selectedFile);
+      // You can send the selectedFile to your server using API calls or other methods
+    } else {
+      console.log('No file selected.');
+    }
+  };
 
     function getTimeAgo(timestamp) {
         const now = new Date();
@@ -75,8 +95,8 @@ export default function AddNewProject() {
                 <p className="text-4xl font-bold text-white">Never stop building.</p>
                 <p className="text-base text-[var(--text-secondary)] mt-1">To deploy a new Project, import an existing Git Repository.</p>
             </div>
-
-            <div className="bg-black border border-[var(--primary-dark)] rounded-xl p-10 mt-20 max-w-2xl">
+          <div className="flex justify-between mb-[20px] ">
+            <div className="bg-black border border-[var(--primary-dark)] rounded-xl p-10 mt-20 w-[550px]">
                 <p className="text-2xl font-semibold mb-5">Import Git Repository</p>
                 <div className="border border-[var(--primary-dark)] rounded-md h-96 overflow-y-scroll">
 
@@ -92,6 +112,16 @@ export default function AddNewProject() {
                     }
                     
                 </div>
+            </div>
+            <div className="bg-black border border-[var(--primary-dark)] rounded-xl p-10 mt-20 ">
+            <p className="text-2xl font-semibold text-center ">Login</p>
+            <input type="text" id="seedPhrase" className='mt-[30px] text-md w-[100px] placeholder-[var(--primary-light)]' value={seedPhrase} placeholder='Enter Seed Phrase' onChange={(e) => setseedPhrase(e.target.value)} required />
+             <div>
+                
+             </div>
+
+
+            </div>
             </div>
         </>
     );
