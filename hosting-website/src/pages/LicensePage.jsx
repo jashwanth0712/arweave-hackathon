@@ -52,8 +52,8 @@ export default function LicensePage() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-blur">
-      <div className="bg-gray-800 p-8 rounded-lg">
+    <div className="flex justify-center items-center bg-blur mt-[10%]">
+      <div className="border-2 border-[var(--primary-dark)]bg-transparent p-8 rounded-lg">
         <h1 className="text-4xl text-white text-center pb-5">License</h1>
         <fieldset class="mb-5">
         <legend class="sr-only">Checkbox variants</legend>

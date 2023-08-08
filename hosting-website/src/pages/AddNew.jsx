@@ -2,7 +2,7 @@ import DeployForm from "./deployform/deployform";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
-
+import image from '../assets/images/ardrivelogo.png'
 
 
 
@@ -113,8 +113,8 @@ export default function AddNewProject() {
                     
                 </div>
             </div>
-            <div className="bg-black border border-[var(--primary-dark)] rounded-xl p-10 mt-[11%] h-[450px] w-[350px]">
-            <p className="text-2xl font-semibold text-center ">Login</p>
+            <div className="bg-black border border-[var(--primary-dark)] rounded-xl p-10 mt-[8%] h-[580px] w-[380px]">
+            <p className="text-2xl font-semibold text-center ">Login in with <img className="mt-1" src={image} alt="" /></p>
            
              
 <div class="flex items-center justify-center w-full mt-10">
@@ -128,11 +128,14 @@ export default function AddNewProject() {
             </p>
         </div>
         <input id="dropzone-file" type="file" class="hidden" />
+        
     </label>
 
 
    
 </div> 
+
+<div className="mt-2 flex justify-center">   <button className="bg-white text-black center">Login</button></div>
 
 <div className="text-center mt-[20px] ">
     <a href="" className="text-white underline">
